@@ -2,8 +2,11 @@
   "name": "@ethalium/nestjs-openapi",
   "version": "0.0.1",
   "description": "Wrapper around @nestjs/swagger to generate OpenAPI spec from decorators.",
-  "author": "",
-  "private": true,
+  "author": {
+    "name": "Ethalium",
+    "url": "https://github.com/ethalium"
+  },
+  "private": false,
   "license": "MIT",
   "scripts": {
     "lib:index": "barrelsby --config barrelsby.config.json",
@@ -11,6 +14,8 @@
     "lib:format": "prettier --write \"lib/**/*.ts\" \"test/**/*.ts\"",
     "lib:lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "lib:test": "jest --watchAll",
+    "lib:publish": "npm run lib:build && cd dist/lib && npm publish --access public",
+    "lib:pack": "npm run lib:build && cd dist/lib && npm pack",
     "example:start": "npm run lib:index && nest start example-app --watch"
   },
   "peerDependencies": {
@@ -65,13 +70,6 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node",
-    "roots": [
-      "<rootDir>/libs/",
-      "<rootDir>/apps/"
-    ],
-    "moduleNameMapper": {
-      "^@app/test(|/.*)$": "<rootDir>/libs/test/src/$1"
-    }
+    "testEnvironment": "node"
   }
 }

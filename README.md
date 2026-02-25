@@ -2,10 +2,10 @@
 
 <p align="center">Extended functionalities/decorators for the official <a href="https://github.com/nestjs/swagger">@nestjs/swagger</a> package</p>
 <p align="center">
-    <a href="https://www.npmjs.com/package/@marxlnfcs/nest-swagger-decorators" target="_blank"><img src="https://img.shields.io/npm/v/@marxlnfcs/nest-swagger-decorators.svg" alt="NPM Version" /></a>
-    <a href="https://www.npmjs.com/package/@marxlnfcs/nest-swagger-decorators" target="_blank"><img src="https://img.shields.io/npm/l/@marxlnfcs/nest-swagger-decorators.svg" alt="Package License" /></a>
-    <a href="https://www.npmjs.com/package/@marxlnfcs/nest-swagger-decorators" target="_blank"><img src="https://img.shields.io/npm/dm/@marxlnfcs/nest-swagger-decorators.svg" alt="NPM Downloads" /></a>
-    <a href="https://www.npmjs.com/package/@marxlnfcs/nest-swagger-decorators" target="_blank"><img src="https://img.shields.io/bundlephobia/min/@marxlnfcs/nest-swagger-decorators?label=size" alt="Package Size" /></a>
+    <a href="https://www.npmjs.com/package/@ethalium/nestjs-openapi" target="_blank"><img src="https://img.shields.io/npm/v/@ethalium/nestjs-openapi.svg" alt="NPM Version" /></a>
+    <a href="https://www.npmjs.com/package/@ethalium/nestjs-openapi" target="_blank"><img src="https://img.shields.io/npm/l/@ethalium/nestjs-openapi.svg" alt="Package License" /></a>
+    <a href="https://www.npmjs.com/package/@ethalium/nestjs-openapi" target="_blank"><img src="https://img.shields.io/npm/dm/@ethalium/nestjs-openapi.svg" alt="NPM Downloads" /></a>
+    <a href="https://www.npmjs.com/package/@ethalium/nestjs-openapi" target="_blank"><img src="https://img.shields.io/bundlephobia/min/@ethalium/nestjs-openapi?label=size" alt="Package Size" /></a>
 </p>
 
 ## Installation
