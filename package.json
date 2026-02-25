@@ -1,0 +1,77 @@
+{
+  "name": "@ethalium/nestjs-openapi",
+  "version": "0.0.1",
+  "description": "Wrapper around @nestjs/swagger to generate OpenAPI spec from decorators.",
+  "author": "",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "lib:index": "barrelsby --config barrelsby.config.json",
+    "lib:build": "npm run lib:index && nest build lib",
+    "lib:format": "prettier --write \"lib/**/*.ts\" \"test/**/*.ts\"",
+    "lib:lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lib:test": "jest --watchAll",
+    "example:start": "npm run lib:index && nest start example-app --watch"
+  },
+  "peerDependencies": {
+    "@nestjs/common": ">=11.0.0",
+    "@nestjs/core": ">=11.0.0",
+    "@nestjs/swagger": ">=11.0.0",
+    "lodash": ">=4.17.23",
+    "reflect-metadata": ">=0.2.2",
+    "rxjs": ">=7.8.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
+    "@nestjs/cli": ">=11.0.0",
+    "@nestjs/platform-express": ">=11.0.0",
+    "@nestjs/schematics": ">=11.0.0",
+    "@nestjs/testing": ">=11.0.0",
+    "@scalar/nestjs-api-reference": "^1.0.27",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/lodash": "^4.17.23",
+    "@types/node": "^22.10.7",
+    "@types/supertest": "^6.0.2",
+    "barrelsby": "^2.8.1",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.2",
+    "globals": "^16.0.0",
+    "jest": "^30.0.0",
+    "prettier": "^3.4.2",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "test",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/libs/",
+      "<rootDir>/apps/"
+    ],
+    "moduleNameMapper": {
+      "^@app/test(|/.*)$": "<rootDir>/libs/test/src/$1"
+    }
+  }
+}

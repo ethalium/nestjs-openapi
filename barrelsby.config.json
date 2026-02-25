@@ -1,0 +1,9 @@
+{
+  "directory": "./lib",
+  "delete": true,
+  "noHeader": true,
+  "location": "top",
+  "singleQuotes": true,
+  "mode": "flat",
+  "name": "index.ts"
+}

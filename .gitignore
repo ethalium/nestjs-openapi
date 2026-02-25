@@ -1,4 +1,8 @@
-# Nestjs specific
+# IDE specific
+/.idea
+/.vscode
+
+# NestJS specific
 /dist
 /node_modules
 /build
