@@ -11,6 +11,11 @@
         "include": "../package.json",
         "outDir": "dist/lib/package.json",
         "watchAssets": true
+      },
+      {
+        "include": "../README.md",
+        "outDir": "dist/lib/README.md",
+        "watchAssets": false
       }
     ]
   },

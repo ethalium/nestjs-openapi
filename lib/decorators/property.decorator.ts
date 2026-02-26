@@ -3,6 +3,13 @@ import {IOpenApiPropertyOptions} from "../interfaces/property.interface";
 import {extractObject, extractString} from "../utils/type.utils";
 import {ApiProperty} from "@nestjs/swagger";
 
+export function OAProperty(options: IOpenApiPropertyOptions): PropertyDecorator {
+  return OACreateProperty({
+    args: [options]
+  });
+}
+
+/** @internal */
 export function OACreateProperty(data: {
   args: any[];
   options?: IOpenApiPropertyOptions;
