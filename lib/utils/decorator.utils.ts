@@ -19,6 +19,22 @@ export type AnyDecorator =
   | ParameterDecorator;
 
 /**
+ * A utility type that represents a decorator capable of being applied to multiple targets,
+ * including classes, methods, properties, and parameters.
+ *
+ * This type is a composition of the following decorator types:
+ * - ClassDecorator: Allows the decorator to be used on a class.
+ * - MethodDecorator: Allows the decorator to be used on a method.
+ * - PropertyDecorator: Allows the decorator to be used on a property.
+ * - ParameterDecorator: Allows the decorator to be used on a method parameter.
+ */
+export type AllDecorator =
+  & ClassDecorator
+  & MethodDecorator
+  & PropertyDecorator
+  & ParameterDecorator;
+
+/**
  * Represents the types of targets that metadata can be applied to within a programming context.
  *
  * This type is used to indicate the nature of the target for which a metadata item is associated.

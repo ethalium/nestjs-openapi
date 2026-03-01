@@ -4,7 +4,7 @@ import {extractObject, extractString} from "../utils/type.utils";
 import {IOpenApiHeaderMetadata, IOpenApiHeaderOptions} from "../interfaces/header.interface";
 import {ApiHeader} from "@nestjs/swagger";
 
-export function OAHeaders(params: IOpenApiHeaderOptions) : ClassDecorator & MethodDecorator {
+export function OAHeaders(params: IOpenApiHeaderOptions): ClassDecorator & MethodDecorator {
   return createDecorator<IOpenApiHeaderOptions, IOpenApiHeaderMetadata[]>({
     transform: (opts) => Object.entries(opts.data).map(([param, metadata]) => ({ name: param, ...metadata })),
     decorators: (opts, store) => opts.data.map(param => store.push(OAHeader(param)))

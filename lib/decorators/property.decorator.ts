@@ -3,9 +3,18 @@ import {IOpenApiPropertyOptions} from "../interfaces/property.interface";
 import {extractObject, extractString} from "../utils/type.utils";
 import {ApiProperty} from "@nestjs/swagger";
 
-export function OAProperty(options: IOpenApiPropertyOptions): PropertyDecorator {
+export function OAProperty(options?: IOpenApiPropertyOptions): PropertyDecorator {
   return OACreateProperty({
     args: [options]
+  });
+}
+
+export function OAPropertyOptional(options?: Omit<IOpenApiPropertyOptions, 'required'>): PropertyDecorator {
+  return OACreateProperty({
+    args: [options],
+    options: {
+      required: false,
+    }
   });
 }
 
@@ -17,7 +26,7 @@ export function OACreateProperty(data: {
 }): PropertyDecorator {
   return createPropertyDecorator<any[], IOpenApiPropertyOptions>({
     transform: (ctx) => {
-      const options = Object.assign(extractObject<IOpenApiPropertyOptions>(ctx.data) || {}, data.options || {});
+      const options = Object.assign(data.options || {}, extractObject<IOpenApiPropertyOptions>(ctx.data) || {});
       options.description = options.description || extractString(ctx.data) || undefined;
       return options;
     },
