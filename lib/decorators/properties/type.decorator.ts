@@ -9,7 +9,7 @@ export function OATypeProperty(typeRef: IOpenApiTypeRef, ...args: any[]): Proper
   return OACreateProperty({
     args: args,
     options: {
-      type: resolveClassRef(typeRef) as any,
+      type: typeRef as any,
       description: extractString(args) || undefined,
     },
   });
@@ -21,7 +21,7 @@ export function OATypePropertyOptional(typeRef: IOpenApiTypeRef, ...args: any[])
   return OACreateProperty({
     args: args,
     options: {
-      type: resolveClassRef(typeRef) as any,
+      type: typeRef as any,
       description: extractString(args) || undefined,
       required: false,
     },
