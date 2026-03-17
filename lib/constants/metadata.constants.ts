@@ -17,7 +17,7 @@ export const DECORATORS = {
   SWAGGER: {
     TAGS: MetadataListAccessor<string>(SWAGGER_DECORATORS.API_TAGS),
     RESPONSES: MetadataMapAccessor<{ [key: string|number]: ApiResponseOptions }>(SWAGGER_DECORATORS.API_RESPONSE),
-    EXTRA_MODELS: MetadataListAccessor<Type<unknown>>(SWAGGER_DECORATORS.API_EXTRA_MODELS),
+    EXTRA_MODELS: MetadataListAccessor<Type>(SWAGGER_DECORATORS.API_EXTRA_MODELS),
     MODEL_PROPERTIES: MetadataAccessor<ApiPropertyOptions>(SWAGGER_DECORATORS.API_MODEL_PROPERTIES),
     MODEL_PROPERTIES_ARRAY: MetadataListAccessor<`:${string}`>(SWAGGER_DECORATORS.API_MODEL_PROPERTIES_ARRAY),
   }

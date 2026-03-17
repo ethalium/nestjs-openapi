@@ -32,6 +32,13 @@ export function OACreateProperty(data: {
     },
     decorators: (ctx, store) => {
       data.tap?.(ctx.data, store as any[]);
+      if(ctx.data.type && typeof ctx.data.type === 'function' && !ctx.data.type.name) {
+        // WORKAROUND: Swagger only accepts a function if the function has a name. Anonymous functions are not supported.
+        const originalType = ctx.data.type;
+        ctx.data.type = function type() {
+          return (originalType as any)();
+        };
+      }
       store.push(ApiProperty(ctx.data));
     }
   })(data.args);

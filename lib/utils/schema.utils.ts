@@ -6,7 +6,7 @@ import {getSchemaPath} from "@nestjs/swagger";
 import {ApiResponseOptions} from "@nestjs/swagger/dist/decorators/api-response.decorator";
 
 export function createSchemaRefs(refs: Array<IOpenApiTypeRefSingle|SchemaObject|ReferenceObject>, options?: {
-  onClassRef?: (ref: Type<unknown>) => void;
+  onClassRef?: (ref: Type) => void;
 }): Array<SchemaObject|ReferenceObject> {
   return refs
     .map(ref => {

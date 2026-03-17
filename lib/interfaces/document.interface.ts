@@ -81,10 +81,10 @@ export type IOpenApiDocumentOverrideResponseStatus =
   | 'serverError' // 5XX
   | IOpenApiStatus;
 
-export type IOpenApiDocumentOverrideResponseValue = IOpenApiTypeRefSingle | [Type<unknown>, string] | IOpenApiDocumentOverrideResponse;
+export type IOpenApiDocumentOverrideResponseValue = IOpenApiTypeRefSingle | [Type, string] | IOpenApiDocumentOverrideResponse;
 
 export interface IOpenApiDocumentOverrideResponse {
-  type: Type<unknown>;
+  type: Type;
   subKey?: string;
 }
 

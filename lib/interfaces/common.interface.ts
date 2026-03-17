@@ -25,18 +25,18 @@ export type IOpenApiStatus = number | '1XX' | '2XX' | '3XX' | '4XX' | '5XX';
  * This type is designed to accommodate various object representations, functions, or forward references utilized in OpenAPI specifications. Each of these options enables flexibility when working with complex API type definitions.
  *
  * Possible structures for IOpenApiType include:
- * - A Type of unknown.
- * - An array containing a Type of unknown.
+ * - A Type of any.
+ * - An array containing a Type of any.
  * - A Function type, or an array containing a Function type.
  * - An IOpenApiForwardRef type enabling forward reference resolution.
  * - A string type representation, often used for generic or primitive types.
  *
  * The components of this type allow for dynamic and versatile schema definitions, making it suitable for diverse OpenAPI use cases.
  */
-export type IOpenApiType<T = unknown> = IOpenApiTypeRef<T> | Function | [Function] | string;
-export type IOpenApiTypeRef<T = unknown> = IOpenApiTypeRefSingle<T> | IOpenApiTypeRefList<T>;
-export type IOpenApiTypeRefSingle<T = unknown> = Type<T> | IOpenApiForwardRef<Type<T>>;
-export type IOpenApiTypeRefList<T = unknown> = Type<T>[] | IOpenApiForwardRef<Type<T>[]>;
+export type IOpenApiType<T = any> = IOpenApiTypeRef<T> | Function | [Function] | string;
+export type IOpenApiTypeRef<T = any> = IOpenApiTypeRefSingle<T> | IOpenApiTypeRefList<T>;
+export type IOpenApiTypeRefSingle<T = any> = Type<T> | IOpenApiForwardRef<Type<T>>;
+export type IOpenApiTypeRefList<T = any> = [Type<T>] | IOpenApiForwardRef<[Type<T>]>;
 
 /**
  * A type definition for a forward reference in an OpenAPI context.
@@ -48,7 +48,7 @@ export type IOpenApiTypeRefList<T = unknown> = Type<T>[] | IOpenApiForwardRef<Ty
  *
  * @returns T The resolved type, which can either be a single type or an array of types.
  */
-export type IOpenApiForwardRef<T = Type<unknown> | [Type<unknown>]> = () => T;
+export type IOpenApiForwardRef<T = any> = () => T;
 
 /**
  * Represents OpenAPI types for defining response information.

@@ -577,12 +577,12 @@ export class OpenApiBuilder {
   /**
    * Adds an extra model to the provided models list and updates the target with the model if it is not already included.
    *
-   * @param {Type<unknown>} model - The model to be added.
-   * @param {Type<unknown>[]} models - The existing list of models.
+   * @param {Type} model - The model to be added.
+   * @param {Type[]} models - The existing list of models.
    * @param {any} target - The target to associate the model with.
    * @return {string} The schema path of the added model.
    */
-  private addExtraModel(model: Type<unknown>, models: Type<unknown>[], target: any): string {
+  private addExtraModel(model: Type, models: Type[], target: any): string {
     if(!models.includes(model)){
       DECORATORS.SWAGGER.EXTRA_MODELS.add(model, target);
       models.push(model);
@@ -595,12 +595,12 @@ export class OpenApiBuilder {
    *
    * @param {ApiResponseOptions} options Options to configure the API response schema.
    * @param {string} key The key corresponding to the property whose schema needs to be updated or generated.
-   * @param {Type<unknown>} model The original model class to extend or modify.
-   * @param {Type<unknown>[]} models A collection of existing models to reference or updates.
+   * @param {Type} model The original model class to extend or modify.
+   * @param {Type[]} models A collection of existing models to reference or updates.
    * @param {any} target The target object to associate the modified model with.
    * @return {string} The name or identifier of the newly generated or modified model.
    */
-  private generateExtraModel(options: ApiResponseOptions, key: string, model: Type<unknown>, models: Type<unknown>[], target: any): string {
+  private generateExtraModel(options: ApiResponseOptions, key: string, model: Type, models: Type<unknown>[], target: any): string {
 
     // convert factory to function or false
     const type = generateSchemaType(options);

@@ -1,5 +1,6 @@
 import {AnimalDto} from "./animal.dto";
-import { OAArrayProperty, OAEnumProperty} from "../../../../../../lib";
+import { OAArrayProperty, OAEnumProperty, OAProperty, OATypeProperty } from '../../../../../../lib';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CatDto extends AnimalDto {
 
@@ -8,5 +9,8 @@ export class CatDto extends AnimalDto {
 
   @OAArrayProperty({ type: 'string' })
   types: string[];
+
+  @OATypeProperty(() => [CatDto])
+  siblings: CatDto[];
 
 }

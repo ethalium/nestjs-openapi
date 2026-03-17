@@ -45,7 +45,7 @@ export function isPlainObject(value: any): value is Object {
  * @param value - The value to check.
  * @returns A boolean indicating whether the value is a class reference.
  */
-export function isClassRef<T = unknown>(value: any): value is Type<T> {
+export function isClassRef<T = any>(value: any): value is Type<T> {
   return typeof value === 'function' && !isPrimitive(value) && /^\s*class\s+/.test(value.toString());
 }
 
@@ -66,7 +66,7 @@ export function isType(value: any): value is IOpenApiType {
  * @param value - The value to be checked.
  * @return Returns `true` if the value is a type reference of `IOpenApiTypeRef<T>`, otherwise `false`.
  */
-export function isTypeRef<T = unknown>(value: any): value is IOpenApiTypeRef<T> {
+export function isTypeRef<T = any>(value: any): value is IOpenApiTypeRef<T> {
   return !!resolveClassRef(value);
 }
 
@@ -91,7 +91,7 @@ export function extractType(args: any[], startIndex?: number, endIndex?: number)
  * @param {number} [endIndex] - The ending index (exclusive) for the range to keep. If undefined, all elements after startIndex are included.
  * @return {IOpenApiTypeRef<T>} The extracted type reference if found, or `null` if not.
  */
-export function extractTypeRef<T = unknown>(args: any[], startIndex?: number, endIndex?: number): IOpenApiTypeRef<T> | null {
+export function extractTypeRef<T = any>(args: any[], startIndex?: number, endIndex?: number): IOpenApiTypeRef<T> | null {
   return reduceArgs(args, startIndex, endIndex).find(arg => isTypeRef(arg)) as Type<T> || null;
 }
 
@@ -176,7 +176,7 @@ export function reduceArgs(args: any[], startIndex?: number, endIndex?: number):
  * @param {number} [endIndex] - Optional ending index in the arguments array to stop searching for the type reference.
  * @return {Type<T>|Type<T>[]|null} The resolved type reference(s) if found, otherwise returns null.
  */
-export function extractAndResolveClassRef<T = unknown>(args: any[], startIndex?: number, endIndex?: number): Type<T>|Type<T>[] | null {
+export function extractAndResolveClassRef<T = any>(args: any[], startIndex?: number, endIndex?: number): Type<T>|Type<T>[] | null {
   const typeRef = extractTypeRef<T>(args, startIndex, endIndex);
   return typeRef ? resolveClassRef<T>(typeRef) : null;
 }
@@ -184,10 +184,10 @@ export function extractAndResolveClassRef<T = unknown>(args: any[], startIndex?:
 /**
  * Resolves a class reference provided as an OpenAPI type reference.
  */
-export function resolveClassRef<T = unknown>(value: IOpenApiTypeRefSingle<T>): Type<T>|null;
-export function resolveClassRef<T = unknown>(value: IOpenApiTypeRefList<T>): Type<T>[]|null;
-export function resolveClassRef<T = unknown>(value: IOpenApiTypeRef<T>): Type<T>|Type<T>[]|null;
-export function resolveClassRef<T = unknown>(value: IOpenApiTypeRef<T>): Type<T>|Type<T>[]|null {
+export function resolveClassRef<T = any>(value: IOpenApiTypeRefSingle<T>): Type<T>|null;
+export function resolveClassRef<T = any>(value: IOpenApiTypeRefList<T>): Type<T>[]|null;
+export function resolveClassRef<T = any>(value: IOpenApiTypeRef<T>): Type<T>|Type<T>[]|null;
+export function resolveClassRef<T = any>(value: IOpenApiTypeRef<T>): Type<T>|Type<T>[]|null {
 
   // resolve list of classRef if its an array
   if(Array.isArray(value)) {
