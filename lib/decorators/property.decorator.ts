@@ -2,6 +2,7 @@ import {createPropertyDecorator} from "../utils/decorator.utils";
 import {IOpenApiPropertyOptions} from "../interfaces/property.interface";
 import {extractObject, extractString} from "../utils/type.utils";
 import {ApiProperty} from "@nestjs/swagger";
+import { Exclude, Expose } from 'class-transformer';
 
 export function OAProperty(options?: IOpenApiPropertyOptions): PropertyDecorator {
   return OACreateProperty({
@@ -31,15 +32,24 @@ export function OACreateProperty(data: {
       return options;
     },
     decorators: (ctx, store) => {
+
+      // call the tap method
       data.tap?.(ctx.data, store as any[]);
+
+      // WORKAROUND: Swagger only accepts a function if the function has a name. Anonymous functions are not supported.
       if(ctx.data.type && typeof ctx.data.type === 'function' && !ctx.data.type.name) {
-        // WORKAROUND: Swagger only accepts a function if the function has a name. Anonymous functions are not supported.
         const originalType = ctx.data.type;
         ctx.data.type = function type() {
           return (originalType as any)();
         };
       }
+
+      // add expose/exclude decorator
+      store.push((ctx.data.expose ?? true) ? Expose() : Exclude());
+
+      // add ApiProperty
       store.push(ApiProperty(ctx.data));
+
     }
   })(data.args);
 }

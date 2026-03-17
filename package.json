@@ -1,6 +1,6 @@
 {
   "name": "@ethalium/nestjs-openapi",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Wrapper around @nestjs/swagger to generate OpenAPI spec from decorators.",
   "author": {
     "name": "Ethalium",
@@ -34,6 +34,7 @@
     "@nestjs/schematics": ">=11.0.0",
     "@nestjs/testing": ">=11.0.0",
     "@scalar/nestjs-api-reference": "^1.0.27",
+    "class-transformer": "^0.5.1",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.23",
