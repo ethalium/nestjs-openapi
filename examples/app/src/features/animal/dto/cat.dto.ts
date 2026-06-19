@@ -5,12 +5,12 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CatDto extends AnimalDto {
 
   @OAEnumProperty(['cat'])
-  type: 'cat';
+  type!: 'cat';
 
   @OAArrayProperty({ type: 'string' })
-  types: string[];
+  types!: string[];
 
   @OATypeProperty(() => [CatDto])
-  siblings: CatDto[];
+  siblings!: CatDto[];
 
 }

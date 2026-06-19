@@ -1,4 +1,4 @@
-import {IOpenApiErrorOptions, IOpenApiErrorType} from "../../interfaces/common.interface";
+import type {IOpenApiErrorOptions, IOpenApiErrorType} from "../../interfaces/common.interface";
 import {OAError} from "../error.decorator";
 import {HttpStatus} from "@nestjs/common";
 

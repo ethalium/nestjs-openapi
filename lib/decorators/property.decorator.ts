@@ -1,7 +1,7 @@
-import {createPropertyDecorator} from "../utils/decorator.utils";
-import {IOpenApiPropertyOptions} from "../interfaces/property.interface";
-import {extractObject, extractString} from "../utils/type.utils";
-import {ApiProperty} from "@nestjs/swagger";
+import { createPropertyDecorator } from '../utils/decorator.utils';
+import type { IOpenApiPropertyOptions } from '../interfaces/property.interface';
+import { extractObject, extractString } from '../utils/type.utils';
+import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 
 export function OAProperty(options?: IOpenApiPropertyOptions): PropertyDecorator {

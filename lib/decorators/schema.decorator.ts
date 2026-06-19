@@ -1,12 +1,6 @@
-import {createDecorator} from "../utils/decorator.utils";
-import {IOpenApiType} from "../interfaces/common.interface";
-import {
-  extractAndResolveClassRef,
-  extractObject,
-  extractString,
-} from '../utils/type.utils';
-import { ApiBody, ApiSchema } from '@nestjs/swagger';
-import {IOpenApiBodyOptions} from "../interfaces/body.interface";
+import { createDecorator } from '../utils/decorator.utils';
+import { extractObject, extractString } from '../utils/type.utils';
+import { ApiSchema } from '@nestjs/swagger';
 import { IOpenApiSchemaOptions } from '../interfaces/schema.interface';
 
 export function OASchema(options: IOpenApiSchemaOptions) : ClassDecorator & MethodDecorator;

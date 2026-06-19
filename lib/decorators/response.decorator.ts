@@ -1,4 +1,4 @@
-import {IOpenApiResponseOptions, IOpenApiResponseType} from "../interfaces/common.interface";
+import type {IOpenApiResponseOptions, IOpenApiResponseType} from "../interfaces/common.interface";
 import {createDecorator} from "../utils/decorator.utils";
 import {extractAndResolveClassRef, extractObject} from "../utils/type.utils";
 import {ApiResponse} from "@nestjs/swagger";

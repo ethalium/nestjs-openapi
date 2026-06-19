@@ -1,5 +1,5 @@
 import {HttpStatus} from "@nestjs/common";
-import {IOpenApiErrorOptions, IOpenApiErrorType} from "../interfaces/common.interface";
+import type {IOpenApiErrorOptions, IOpenApiErrorType} from "../interfaces/common.interface";
 import {createDecorator} from "../utils/decorator.utils";
 import {extractAndResolveClassRef, extractObject, extractString} from "../utils/type.utils";
 import {ApiResponse} from "@nestjs/swagger";

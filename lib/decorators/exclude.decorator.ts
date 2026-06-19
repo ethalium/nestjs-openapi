@@ -1,4 +1,5 @@
-import { AllDecorator, createDecorator, } from '../utils/decorator.utils';
+import type { AllDecorator } from '../utils/decorator.utils';
+import { createDecorator } from '../utils/decorator.utils';
 import { ApiExcludeController, ApiHideProperty } from '@nestjs/swagger';
 
 export function OAExclude(disable?: boolean): AllDecorator {

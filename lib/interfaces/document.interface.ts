@@ -1,8 +1,8 @@
-import {SwaggerDocumentOptions} from "@nestjs/swagger/dist/interfaces";
-import {OpenAPIObject} from "@nestjs/swagger";
-import {TagObject} from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
-import {IOpenApiStatus, IOpenApiTagGroupMetadata, IOpenApiTypeRefSingle} from "./common.interface";
-import {Type} from "@nestjs/common";
+import type {SwaggerDocumentOptions} from "@nestjs/swagger";
+import type {OpenAPIObject} from "@nestjs/swagger";
+import type {TagObject} from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
+import type {IOpenApiStatus, IOpenApiTagGroupMetadata, IOpenApiTypeRefSingle} from "./common.interface";
+import type {Type} from "@nestjs/common";
 
 export interface IOpenApiDocumentOptions extends SwaggerDocumentOptions {
 

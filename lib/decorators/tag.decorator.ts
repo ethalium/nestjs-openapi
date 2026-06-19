@@ -1,5 +1,5 @@
 import {createDecorator} from "../utils/decorator.utils";
-import {IOpenApiTagMetadata} from "../interfaces/common.interface";
+import type {IOpenApiTagMetadata} from "../interfaces/common.interface";
 import {extractObject, extractString} from "../utils/type.utils";
 import {DECORATORS} from "../constants/metadata.constants";
 import {ApiTags} from "@nestjs/swagger";

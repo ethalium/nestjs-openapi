@@ -1,6 +1,6 @@
-import {ParameterObject} from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
-import {IOpenApiType} from "./common.interface";
-import {SwaggerEnumType} from "@nestjs/swagger/dist/types/swagger-enum.type";
+import type {ParameterObject} from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
+import type {IOpenApiType} from "./common.interface";
+import type {SwaggerEnumType} from "@nestjs/swagger/dist/types/swagger-enum.type";
 
 export type IOpenApiQueryOptions = IOpenApiQuerySpec;
 

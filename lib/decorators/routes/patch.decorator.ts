@@ -1,5 +1,5 @@
-import {IOpenApiRouteLike} from "../../interfaces/common.interface";
-import {IOpenApiRouteOptions} from "../../interfaces/route.interface";
+import type {IOpenApiRouteLike} from "../../interfaces/common.interface";
+import type {IOpenApiRouteOptions} from "../../interfaces/route.interface";
 import {OARoute} from "../route.decorator";
 import {RequestMethod} from "@nestjs/common";
 

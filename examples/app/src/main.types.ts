@@ -4,28 +4,28 @@ import {OAObjectPropertyOptional} from "../../../lib/decorators/properties/objec
 export class SuccessResponse {
 
   @OABooleanProperty()
-  success: boolean;
+  success!: boolean;
 
   @OAOneOfProperty([Object, Array])
-  data: any;
+  data!: any;
 
 }
 
 export class ErrorResponse {
 
   @OABooleanProperty()
-  success: boolean;
+  success!: boolean;
 
   @OANumberProperty()
-  status: number;
+  status!: number;
 
   @OANumberProperty()
-  code: string;
+  code!: string;
 
   @OAStringProperty()
-  message: string;
+  message!: string;
 
   @OAObjectPropertyOptional()
-  details: any;
+  details!: any;
 
 }

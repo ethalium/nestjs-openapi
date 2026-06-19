@@ -1,9 +1,5 @@
-import {Type} from "@nestjs/common";
-import {
-  ApiResponseExamples,
-  ApiResponseNoStatusOptions,
-  ApiResponseOptions
-} from "@nestjs/swagger/dist/decorators/api-response.decorator";
+import type { Type } from '@nestjs/common';
+import type { ApiResponseExamples, ApiResponseNoStatusOptions, ApiResponseOptions } from '@nestjs/swagger';
 
 /**
  * Represents the status of an OpenAPI operation.

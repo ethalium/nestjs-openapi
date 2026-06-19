@@ -1,7 +1,10 @@
-import {IOpenApiDocumentBuilder, OpenApiDocumentBuilder} from "./utils/document-builder.utils";
-import {INestApplication, Module} from "@nestjs/common";
-import {OpenAPIObject, SwaggerModule} from "@nestjs/swagger";
-import {IOpenApiDocumentOptions, OpenApiDocument} from "./interfaces/document.interface";
+import type {IOpenApiDocumentBuilder} from "./utils/document-builder.utils";
+import {OpenApiDocumentBuilder} from "./utils/document-builder.utils";
+import {Module} from "@nestjs/common";
+import type {INestApplication} from "@nestjs/common";
+import type {OpenAPIObject} from "@nestjs/swagger";
+import {SwaggerModule} from "@nestjs/swagger";
+import type {IOpenApiDocumentOptions, OpenApiDocument} from "./interfaces/document.interface";
 import {OpenApiBuilder} from "./openapi.builder";
 
 

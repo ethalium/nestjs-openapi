@@ -1,5 +1,5 @@
-import { IOpenApiTypeRef } from '../../interfaces/common.interface';
-import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import type { IOpenApiTypeRef } from '../../interfaces/common.interface';
+import type { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { extractString } from '../../utils/type.utils';
 import { OACreateProperty } from '../property.decorator';
 

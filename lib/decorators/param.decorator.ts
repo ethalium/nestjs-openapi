@@ -1,8 +1,8 @@
-import {createDecorator} from "../utils/decorator.utils";
-import {IOpenApiTagMetadata} from "../interfaces/common.interface";
-import {extractObject, extractString} from "../utils/type.utils";
-import {IOpenApiParamMetadata, IOpenApiParamOptions} from "../interfaces/param.interface";
-import {ApiParam} from "@nestjs/swagger";
+import { createDecorator } from '../utils/decorator.utils';
+import type { IOpenApiTagMetadata } from '../interfaces/common.interface';
+import { extractObject, extractString } from '../utils/type.utils';
+import type { IOpenApiParamMetadata, IOpenApiParamOptions } from '../interfaces/param.interface';
+import { ApiParam } from '@nestjs/swagger';
 
 export function OAParams(params: IOpenApiParamOptions) : ClassDecorator & MethodDecorator {
   return createDecorator<IOpenApiParamOptions, IOpenApiParamMetadata[]>({

@@ -1,4 +1,4 @@
-import {ApiHeaderOptions} from "@nestjs/swagger";
+import type {ApiHeaderOptions} from "@nestjs/swagger";
 
 export type IOpenApiHeaderOptions = IOpenApiHeaderSpec;
 

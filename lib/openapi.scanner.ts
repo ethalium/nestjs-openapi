@@ -1,11 +1,12 @@
-import {INestApplication, Type} from "@nestjs/common";
-import {NestContainer} from "@nestjs/core";
-import {Module} from "@nestjs/core/injector/module";
-import {ModulesContainer} from "@nestjs/core/injector/modules-container";
-import {Controller} from "@nestjs/common/interfaces";
-import {InstanceWrapper} from "@nestjs/core/injector/instance-wrapper";
-import {isClassRef} from "./utils/type.utils";
-import {ClassEntryMethod, ClassEntryProperty, getAllClassEntries} from "./utils/class.utils";
+import type { INestApplication, Type } from '@nestjs/common';
+import { NestContainer } from '@nestjs/core';
+import { Module } from '@nestjs/core/injector/module';
+import { ModulesContainer } from '@nestjs/core/injector/modules-container';
+import type { Controller } from '@nestjs/common/interfaces';
+import { InstanceWrapper } from '@nestjs/core/injector/instance-wrapper';
+import { isClassRef } from './utils/type.utils';
+import type { ClassEntryMethod, ClassEntryProperty } from './utils/class.utils';
+import { getAllClassEntries } from './utils/class.utils';
 
 export interface IOpenApiScannedModule {
   id: string;

@@ -1,9 +1,9 @@
-import {IOpenApiPropertyOptions} from "../../interfaces/property.interface";
-import {IOpenApiTypeRefSingle} from "../../interfaces/common.interface";
-import {AnyDecorator} from "../../utils/decorator.utils";
+import type {IOpenApiPropertyOptions} from "../../interfaces/property.interface";
+import type {IOpenApiTypeRefSingle} from "../../interfaces/common.interface";
+import type {AnyDecorator} from "../../utils/decorator.utils";
 import {ApiExtraModels} from "@nestjs/swagger";
 import {OACreateProperty} from "../property.decorator";
-import {SchemaObject} from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
+import type {SchemaObject} from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import {createSchemaRefs} from "../../utils/schema.utils";
 
 export type IOpenApiOneOfPropertyOptions = Omit<IOpenApiPropertyOptions, 'type'|'oneOf'|'allOf'|'anyOf'>;

@@ -1,5 +1,5 @@
-import {IOpenApiPropertyOptions} from "../../interfaces/property.interface";
-import {EnumAllowedTypes} from "@nestjs/swagger/dist/interfaces/schema-object-metadata.interface";
+import type {IOpenApiPropertyOptions} from "../../interfaces/property.interface";
+import type {EnumAllowedTypes} from "@nestjs/swagger/dist/interfaces/schema-object-metadata.interface";
 import {OACreateProperty} from "../property.decorator";
 
 export function OAEnumProperty(enumRef: EnumAllowedTypes, options?: Omit<IOpenApiPropertyOptions, 'type'|'enum'>) : PropertyDecorator;

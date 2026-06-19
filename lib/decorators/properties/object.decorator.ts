@@ -1,6 +1,6 @@
-import {SchemaObject} from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
+import type {SchemaObject} from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 import {extractObject, extractString} from "../../utils/type.utils";
-import {IOpenApiPropertyOptions} from "../../interfaces/property.interface";
+import type {IOpenApiPropertyOptions} from "../../interfaces/property.interface";
 import {OACreateProperty} from "../property.decorator";
 
 export function OAObjectProperty(schema?: SchemaObject) : PropertyDecorator;

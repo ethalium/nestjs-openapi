@@ -1,4 +1,4 @@
-import {IOpenApiRequestOptions} from "../interfaces/request.interface";
+import type {IOpenApiRequestOptions} from "../interfaces/request.interface";
 import {createDecorator} from "../utils/decorator.utils";
 import {ApiExcludeController, ApiExcludeEndpoint} from "@nestjs/swagger";
 import {OAParams} from "./param.decorator";

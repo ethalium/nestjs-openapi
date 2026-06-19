@@ -1,5 +1,5 @@
-import {ControllerOptions} from "@nestjs/common";
-import {IOpenApiRequestOptions} from "./request.interface";
+import type {ControllerOptions} from "@nestjs/common";
+import type {IOpenApiRequestOptions} from "./request.interface";
 
 export interface IOpenApiControllerOptions extends IOpenApiRequestOptions, ControllerOptions {
 

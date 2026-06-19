@@ -1,12 +1,12 @@
-import {Type} from "@nestjs/common";
-import {
+import type { Type } from '@nestjs/common';
+import type {
   IOpenApiRouteLike,
   IOpenApiType,
   IOpenApiTypeRef,
   IOpenApiTypeRefList,
-  IOpenApiTypeRefSingle
-} from "../interfaces/common.interface";
-import {isFunction} from "lodash";
+  IOpenApiTypeRefSingle,
+} from '../interfaces/common.interface';
+import { isFunction } from 'lodash';
 
 /**
  * Checks if the provided value is null or undefined.

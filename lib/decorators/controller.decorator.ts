@@ -1,6 +1,6 @@
 import {createDecorator} from "../utils/decorator.utils";
-import {IOpenApiControllerOptions} from "../interfaces/controller.interface";
-import {IOpenApiRouteLike} from "../interfaces/common.interface";
+import type {IOpenApiControllerOptions} from "../interfaces/controller.interface";
+import type {IOpenApiRouteLike} from "../interfaces/common.interface";
 import {extractFalse, extractObject, extractRoute} from "../utils/type.utils";
 import {Controller} from "@nestjs/common";
 import {OARequest} from "./request.decorator";

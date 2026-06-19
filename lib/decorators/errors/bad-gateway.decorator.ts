@@ -1,6 +1,6 @@
-import {HttpStatus} from "@nestjs/common";
-import {OAError} from "../error.decorator";
-import {IOpenApiErrorOptions, IOpenApiErrorType} from "../../interfaces/common.interface";
+import { HttpStatus } from '@nestjs/common';
+import { OAError } from '../error.decorator';
+import type { IOpenApiErrorOptions, IOpenApiErrorType } from '../../interfaces/common.interface';
 
 export function OABadGateway(options?: Omit<IOpenApiErrorOptions, 'status'>) : ClassDecorator & MethodDecorator;
 export function OABadGateway(description: string, options?: Omit<IOpenApiErrorOptions, 'status'|'description'>) : ClassDecorator & MethodDecorator;

@@ -1,5 +1,5 @@
-import {IOpenApiType, IOpenApiTypeHost} from "./common.interface";
-import {ApiResponseMetadata} from "@nestjs/swagger/dist/decorators/api-response.decorator";
+import type { IOpenApiType, IOpenApiTypeHost } from './common.interface';
+import type { ApiResponseMetadata } from '@nestjs/swagger';
 
 export type IOpenApiBodyOptions = IOpenApiType | IOpenApiBodyMetadata;
 

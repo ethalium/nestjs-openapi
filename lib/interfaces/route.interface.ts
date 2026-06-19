@@ -1,8 +1,8 @@
-import {ExternalDocumentationObject} from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
-import {IOpenApiBodyOptions} from "./body.interface";
-import {RequestMappingMetadata} from "@nestjs/common/decorators/http/request-mapping.decorator";
-import {IOpenApiRequestOptions} from "./request.interface";
-import {IOpenApiResponseOptions, IOpenApiResponseType} from "./common.interface";
+import type {ExternalDocumentationObject} from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
+import type {IOpenApiBodyOptions} from "./body.interface";
+import type {RequestMappingMetadata} from "@nestjs/common/decorators/http/request-mapping.decorator";
+import type {IOpenApiRequestOptions} from "./request.interface";
+import type {IOpenApiResponseOptions, IOpenApiResponseType} from "./common.interface";
 
 export interface IOpenApiRouteOptions extends IOpenApiRequestOptions, Omit<RequestMappingMetadata, 'method'> {
 

@@ -1,8 +1,8 @@
-import {createDecorator} from "../utils/decorator.utils";
-import {IOpenApiTagMetadata} from "../interfaces/common.interface";
-import {extractObject, extractString} from "../utils/type.utils";
-import {IOpenApiHeaderMetadata, IOpenApiHeaderOptions} from "../interfaces/header.interface";
-import {ApiHeader} from "@nestjs/swagger";
+import { createDecorator } from '../utils/decorator.utils';
+import type { IOpenApiTagMetadata } from '../interfaces/common.interface';
+import { extractObject, extractString } from '../utils/type.utils';
+import type { IOpenApiHeaderMetadata, IOpenApiHeaderOptions } from '../interfaces/header.interface';
+import { ApiHeader } from '@nestjs/swagger';
 
 export function OAHeaders(params: IOpenApiHeaderOptions): ClassDecorator & MethodDecorator {
   return createDecorator<IOpenApiHeaderOptions, IOpenApiHeaderMetadata[]>({

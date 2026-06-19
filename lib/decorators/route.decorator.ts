@@ -1,8 +1,8 @@
 import {createDecorator} from "../utils/decorator.utils";
-import {IOpenApiRouteLike} from "../interfaces/common.interface";
+import type {IOpenApiRouteLike} from "../interfaces/common.interface";
 import {extractFalse, extractObject, extractRoute} from "../utils/type.utils";
 import {RequestMapping, RequestMethod} from "@nestjs/common";
-import {IOpenApiRouteOptions} from "../interfaces/route.interface";
+import type {IOpenApiRouteOptions} from "../interfaces/route.interface";
 import {OACreatedResponse, OAOkResponse} from "./response.decorator";
 import {OABody} from "./body.decorator";
 import {OARequest} from "./request.decorator";

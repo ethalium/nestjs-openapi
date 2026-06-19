@@ -1,7 +1,7 @@
-import {IOpenApiTagGroups, IOpenApiTags} from "./common.interface";
-import {IOpenApiHeaderOptions} from "./header.interface";
-import {IOpenApiQueryOptions} from "./query.interface";
-import {IOpenApiParamOptions} from "./param.interface";
+import type {IOpenApiTagGroups, IOpenApiTags} from "./common.interface";
+import type {IOpenApiHeaderOptions} from "./header.interface";
+import type {IOpenApiQueryOptions} from "./query.interface";
+import type {IOpenApiParamOptions} from "./param.interface";
 
 export interface IOpenApiRequestOptions {
 

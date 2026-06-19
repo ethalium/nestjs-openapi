@@ -1,4 +1,4 @@
-import {IOpenApiPropertyOptions} from "../../interfaces/property.interface";
+import type {IOpenApiPropertyOptions} from "../../interfaces/property.interface";
 import {OACreateProperty} from "../property.decorator";
 
 export function OAStringProperty(options?: Omit<IOpenApiPropertyOptions, 'type'>) : PropertyDecorator;

@@ -1,3 +1,3 @@
-import { ApiSchemaOptions } from '@nestjs/swagger/dist/decorators/api-schema.decorator';
+import type { ApiSchemaOptions } from '@nestjs/swagger';
 
 export type IOpenApiSchemaOptions = ApiSchemaOptions;

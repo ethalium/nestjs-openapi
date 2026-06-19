@@ -4,6 +4,6 @@ import {OAEnumProperty} from "../../../../../../lib";
 export class DogDto extends AnimalDto {
 
   @OAEnumProperty(['dog'])
-  type: 'dog';
+  type!: 'dog';
 
 }

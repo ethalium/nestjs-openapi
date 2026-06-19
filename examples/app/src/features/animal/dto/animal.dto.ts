@@ -3,10 +3,10 @@ import {OABooleanProperty, OAStringProperty, OAStringPropertyOptional} from "../
 export class AnimalDto {
 
   @OABooleanProperty()
-  active: boolean;
+  active!: boolean;
 
   @OAStringProperty()
-  name: string;
+  name!: string;
 
   @OAStringPropertyOptional()
   comment?: string|null;
