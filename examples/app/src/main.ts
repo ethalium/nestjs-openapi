@@ -1,9 +1,10 @@
-import {NestFactory} from '@nestjs/core';
-import {MainModule} from "./main.module";
-import {SwaggerModule} from "@nestjs/swagger";
-import {apiReference} from "@scalar/nestjs-api-reference";
-import {OpenApiModule} from "../../../lib/openapi.module";
-import {ErrorResponse, SuccessResponse} from "./main.types";
+import { NestFactory } from '@nestjs/core';
+import { MainModule } from './main.module';
+import { SwaggerModule } from '@nestjs/swagger';
+import { apiReference } from '@scalar/nestjs-api-reference';
+import { OpenApiModule } from '../../../lib/openapi.module';
+import { ErrorResponse, SuccessResponse } from './main.types';
+import { RbacTransformer } from './main.rbac';
 
 async function bootstrap() {
 
@@ -24,7 +25,10 @@ async function bootstrap() {
     responseOverrides: {
       '2XX': [SuccessResponse, 'data'],
       'serverError': ErrorResponse
-    }
+    },
+    transformers: [
+      RbacTransformer
+    ]
   });
 
   // setup swagger

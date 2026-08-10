@@ -1,8 +1,8 @@
-import {createDecorator} from "../utils/decorator.utils";
-import type {IOpenApiType} from "../interfaces/common.interface";
-import {extractAndResolveClassRef, extractObject} from "../utils/type.utils";
-import {ApiBody} from "@nestjs/swagger";
-import type {IOpenApiBodyOptions} from "../interfaces/body.interface";
+import { createDecorator } from '../utils/decorator.utils';
+import type { IOpenApiType } from '../interfaces/common.interface';
+import { extractAndResolveClassRef, extractObject } from '../utils/type.utils';
+import { ApiBody } from '@nestjs/swagger';
+import type { IOpenApiBodyOptions } from '../interfaces/body.interface';
 
 export function OABody(options: IOpenApiBodyOptions) : ClassDecorator & MethodDecorator;
 export function OABody(type: IOpenApiType, options?: Omit<IOpenApiBodyOptions, 'type'>) : ClassDecorator & MethodDecorator;

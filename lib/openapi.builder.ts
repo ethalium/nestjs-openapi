@@ -1,4 +1,4 @@
-import type { INestApplication, Type } from '@nestjs/common';
+import type { Type } from '@nestjs/common';
 import type {
   IOpenApiDocumentOptions,
   IOpenApiDocumentOverrideResponse,
@@ -15,6 +15,7 @@ import type { ApiResponseOptions } from '@nestjs/swagger';
 import { getSchemaPath, OmitType } from '@nestjs/swagger';
 import { isClassRef, isPlainObject } from './utils/type.utils';
 import { generateSchemaType } from './utils/schema.utils';
+import { IOpenApiExtensionMetadata } from './interfaces/extension.interface';
 
 interface IOpenApiBuilderTagGroup extends Omit<IOpenApiTagGroupMetadata, 'tags'> {
   tags: IOpenApiTagMetadata[];
@@ -26,6 +27,7 @@ interface IOpenApiBuilderController<MustHaveTagGroup extends boolean> {
   controller: IOpenApiScannedController;
   tagGroup: MustHaveTagGroup extends true ? IOpenApiTagGroupMetadata : IOpenApiTagGroupMetadata | null;
   tags: IOpenApiTagMetadata[];
+  extensions: Record<string, IOpenApiExtensionMetadata>;
 }
 
 interface IOpenApiBuilderMethod<MustHaveTagGroup extends boolean> {
@@ -33,6 +35,7 @@ interface IOpenApiBuilderMethod<MustHaveTagGroup extends boolean> {
   method: ClassEntryMethod;
   tagGroup: MustHaveTagGroup extends true ? IOpenApiTagGroupMetadata : IOpenApiTagGroupMetadata | null;
   tags: IOpenApiTagMetadata[];
+  extensions: Record<string, IOpenApiExtensionMetadata>;
 }
 
 interface IOpenApiBuilderResponse {
@@ -49,22 +52,10 @@ interface IOpenApiBuilderResponseOverride extends IOpenApiDocumentOverrideRespon
 
 export class OpenApiBuilder {
   constructor(
-    private readonly app: INestApplication,
+    private readonly scanner: OpenApiScanner,
     private readonly config: Omit<OpenApiDocument, 'paths'>,
     private readonly opts: IOpenApiDocumentOptions,
   ){}
-
-  /**
-   * Retrieves the OpenApiScanner instance associated with the current application.
-   * This method ensures that the OpenApiScanner is lazily initialized and cached.
-   *
-   * @return {OpenApiScanner} The OpenApiScanner instance managing the application's scanning functionality.
-   */
-  private get scanner(): OpenApiScanner {
-    const self = (this as any);
-    self._scanner = self._scanner || new OpenApiScanner(this.app);
-    return self._scanner;
-  }
 
   /**
    * Retrieves the options for the OpenAPI document, ensuring all required fields are populated with defaults if not provided.
@@ -168,7 +159,7 @@ export class OpenApiBuilder {
     // we need to get all controllers and methods
     const { controllers, methods } = {
       controllers: this.getControllers(),
-      methods: this.getControllers(),
+      methods: this.getMethods(),
     };
 
     // we need to create an array for tags
@@ -267,6 +258,7 @@ export class OpenApiBuilder {
           (DECORATORS.OPENAPI.TAGS.get(controller.type) || []),
           (DECORATORS.SWAGGER.TAGS.get(controller.type) || []).map(_ => ({name: _})),
         ].flat()),
+        extensions: DECORATORS.OPENAPI.EXTENSIONS.getAll(controller.type) || {},
       }))
       .map(controller => {
         controller.tagGroup = controller.tagGroup ?? this.getTagGroupUngrouped();
@@ -301,6 +293,7 @@ export class OpenApiBuilder {
           (DECORATORS.OPENAPI.TAGS.get(method.descriptor.value) || []),
           (DECORATORS.SWAGGER.TAGS.get(method.descriptor.value) || []).map(_ => ({name: _}))
         ].flat()),
+        extensions: DECORATORS.OPENAPI.EXTENSIONS.getAll(method.descriptor.value) || {},
       }))).flat()
       .map(method => {
         method.tagGroup = method.tagGroup ?? this.getTagGroupUngrouped();

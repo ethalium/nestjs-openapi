@@ -1,5 +1,5 @@
-import type {IOpenApiPropertyOptions} from "../../interfaces/property.interface";
-import {OACreateProperty} from "../property.decorator";
+import type { IOpenApiPropertyOptions } from '../../interfaces/property.interface';
+import { OACreateProperty } from '../property.decorator';
 
 export function OANumberProperty(options?: Omit<IOpenApiPropertyOptions, 'type'>) : PropertyDecorator;
 export function OANumberProperty(description?: string, options?: Omit<IOpenApiPropertyOptions, 'type'|'description'>) : PropertyDecorator;

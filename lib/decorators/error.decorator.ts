@@ -1,8 +1,8 @@
-import {HttpStatus} from "@nestjs/common";
-import type {IOpenApiErrorOptions, IOpenApiErrorType} from "../interfaces/common.interface";
-import {createDecorator} from "../utils/decorator.utils";
-import {extractAndResolveClassRef, extractObject, extractString} from "../utils/type.utils";
-import {ApiResponse} from "@nestjs/swagger";
+import { HttpStatus } from '@nestjs/common';
+import type { IOpenApiErrorOptions, IOpenApiErrorType } from '../interfaces/common.interface';
+import { createDecorator } from '../utils/decorator.utils';
+import { extractAndResolveClassRef, extractObject, extractString } from '../utils/type.utils';
+import { ApiResponse } from '@nestjs/swagger';
 
 export function OAError(status: HttpStatus|number, options?: Omit<IOpenApiErrorOptions, 'status'>): ClassDecorator & MethodDecorator;
 export function OAError(status: HttpStatus|number, description?: string, options?: Omit<IOpenApiErrorOptions, 'status'|'description'>): ClassDecorator & MethodDecorator;

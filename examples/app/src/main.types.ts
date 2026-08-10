@@ -1,5 +1,5 @@
-import {OABooleanProperty, OANumberProperty, OAOneOfProperty, OAStringProperty} from "../../../lib";
-import {OAObjectPropertyOptional} from "../../../lib/decorators/properties/object.decorator";
+import { OABooleanProperty, OANumberProperty, OAOneOfProperty, OAStringProperty } from '../../../lib';
+import { OAObjectPropertyOptional } from '../../../lib/decorators/properties/object.decorator';
 
 export class SuccessResponse {
 

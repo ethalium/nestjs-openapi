@@ -1,9 +1,10 @@
-import {MetadataAccessor, MetadataListAccessor, MetadataMapAccessor} from "../utils/metadata.utils";
-import {IOpenApiTagGroupMetadata, IOpenApiTagMetadata} from "../interfaces/common.interface";
-import {DECORATORS as SWAGGER_DECORATORS} from "@nestjs/swagger/dist/constants";
-import {Type} from "@nestjs/common";
-import {ApiResponseOptions} from "@nestjs/swagger/dist/decorators/api-response.decorator";
-import {ApiPropertyOptions} from "@nestjs/swagger";
+import { MetadataAccessor, MetadataListAccessor, MetadataMapAccessor } from '../utils/metadata.utils';
+import { IOpenApiTagGroupMetadata, IOpenApiTagMetadata } from '../interfaces/common.interface';
+import { DECORATORS as SWAGGER_DECORATORS } from '@nestjs/swagger/dist/constants';
+import { Type } from '@nestjs/common';
+import { ApiResponseOptions } from '@nestjs/swagger/dist/decorators/api-response.decorator';
+import { ApiPropertyOptions } from '@nestjs/swagger';
+import { IOpenApiExtensionMetadata } from '../interfaces/extension.interface';
 
 export const DECORATORS = {
 
@@ -11,6 +12,7 @@ export const DECORATORS = {
   OPENAPI: {
     TAGS: MetadataListAccessor<IOpenApiTagMetadata>('openapi/tags', 'name'),
     TAG_GROUPS: MetadataAccessor<IOpenApiTagGroupMetadata>('openapi/tagGroups'),
+    EXTENSIONS: MetadataMapAccessor<Record<string, IOpenApiExtensionMetadata>>('openapi/extensions'),
   },
 
   // helpers for swagger decorators

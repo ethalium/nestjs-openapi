@@ -1,4 +1,4 @@
-import {OABooleanProperty, OAStringProperty, OAStringPropertyOptional} from "../../../../../../lib";
+import { OABooleanProperty, OAStringProperty, OAStringPropertyOptional } from '../../../../../../lib';
 
 export class AnimalDto {
 

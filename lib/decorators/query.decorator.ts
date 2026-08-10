@@ -1,8 +1,8 @@
-import {createDecorator} from "../utils/decorator.utils";
-import type {IOpenApiTagMetadata} from "../interfaces/common.interface";
-import {extractObject, extractString} from "../utils/type.utils";
-import type {IOpenApiQueryMetadata, IOpenApiQueryOptions} from "../interfaces/query.interface";
-import {ApiQuery} from "@nestjs/swagger";
+import { createDecorator } from '../utils/decorator.utils';
+import type { IOpenApiTagMetadata } from '../interfaces/common.interface';
+import { extractObject, extractString } from '../utils/type.utils';
+import type { IOpenApiQueryMetadata, IOpenApiQueryOptions } from '../interfaces/query.interface';
+import { ApiQuery } from '@nestjs/swagger';
 
 export function OAQueries(params: IOpenApiQueryOptions) : ClassDecorator & MethodDecorator {
   return createDecorator<IOpenApiQueryOptions, IOpenApiQueryMetadata[]>({

@@ -1,9 +1,10 @@
-import {createDecorator} from "../utils/decorator.utils";
-import type {IOpenApiControllerOptions} from "../interfaces/controller.interface";
-import type {IOpenApiRouteLike} from "../interfaces/common.interface";
-import {extractFalse, extractObject, extractRoute} from "../utils/type.utils";
-import {Controller} from "@nestjs/common";
-import {OARequest} from "./request.decorator";
+import { createDecorator } from '../utils/decorator.utils';
+import type { IOpenApiControllerOptions } from '../interfaces/controller.interface';
+import type { IOpenApiRouteLike } from '../interfaces/common.interface';
+import { extractFalse, extractObject, extractRoute } from '../utils/type.utils';
+import { Controller } from '@nestjs/common';
+import { OARequest } from './request.decorator';
+import { OAOrigin } from './origin.decorator';
 
 export function OAController(path: IOpenApiRouteLike, options?: Omit<IOpenApiControllerOptions, 'path'> | false): ClassDecorator;
 export function OAController(options?: IOpenApiControllerOptions): ClassDecorator;
@@ -24,6 +25,9 @@ export function OAController(...args: any[]): ClassDecorator {
         durable: options.data.durable,
         version: options.data.version,
       }));
+
+      // add @OAOrigin decorator
+      store.push(OAOrigin());
 
       // add @OARequest decorator
       store.push(OARequest('controller', options.data));

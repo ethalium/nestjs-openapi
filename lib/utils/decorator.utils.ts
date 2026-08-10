@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { addMetadataItems, addMetadataUniqueItems, getMetadataDecorateArgs, setMetadata } from './metadata.utils';
+import { Type } from '@nestjs/common';
 
 /**
  * A type alias `AnyDecorator` that represents a union of various decorator types:
@@ -86,15 +87,26 @@ export type DecoratorFactory<TInput = void, TDecorator = AnyDecorator> = (input:
  * @property prototype The prototype of the class, providing access to all shared
  *                     methods and properties during decoration.
  */
-export interface DecoratorContext<TInput = void> {
+export interface DecoratorContext<TInput = void, TClassType = unknown> {
   kind: DecoratorKind;
   target: any;
-  decorateArgs: [targetOrDescriptorValue?: any, propertyKey?: string|symbol];
+  classType: Type<TClassType>;
+  decorateArgs: DecoratorApplyArgs;
   propertyKey?: string | symbol;
   propertyDescriptor?: PropertyDescriptor;
   parameterIndex?: number;
   data: TInput;
 }
+
+/**
+ * Represents the arguments passed to a decorator application. The tuple consists of optionally
+ * the target or descriptor value and, optionally, the property key.
+ *
+ * @typedef {Array} DecoratorApplyArgs
+ * @property {any} [0] - The target object or descriptor value where the decorator is applied.
+ * @property {string|symbol} [1] - The optional property key of the decorated class member.
+ */
+export type DecoratorApplyArgs = [targetOrDescriptorValue?: any, propertyKey?: string|symbol];
 
 /**
  * Represents configuration options for applying decorators.
@@ -140,31 +152,31 @@ export interface ListDecoratorOptions<TInput, TTransformed = TInput> {
 }
 
 /**
- * Determines the kind of metadata target based on the provided arguments.
+ * Detects the kind of decorator being used based on the provided arguments.
  *
- * @param {any} target - The target to analyze, typically a class, method, property, or parameter.
- * @param {string|symbol} [propertyKey] - The optional property name or symbol associated with the target.
- * @param {PropertyDescriptor|number} [propertyDescriptor] - The optional property descriptor or parameter index.
- * @return {DecoratorKind} The detected metadata target kind, which could be 'class', 'method', 'property', or 'parameter'.
+ * @param {any} target The target object, which can represent a class, method, property, or parameter.
+ * @param {string|symbol} [propertyKey] The key of the property or method being decorated. Optional and used only for property, method, or parameter decorators.
+ * @param {PropertyDescriptor|number} [propertyDescriptorOrIndex] A property descriptor for a method or property decorator, or the parameter index for a parameter decorator. Optional and used to distinguish decorator kinds.
+ * @return {DecoratorKind} The kind of decorator detected, which can be one of 'class', 'method', 'property', or 'parameter'.
  */
-export function detectDecoratorKind(target: any, propertyKey?: string|symbol, propertyDescriptor?: PropertyDescriptor|number): DecoratorKind {
-  // target => class
-  if(target && propertyKey && propertyDescriptor){
-    return 'class';
-  }
-
+export function detectDecoratorKind(target: any, propertyKey?: string|symbol, propertyDescriptorOrIndex?: PropertyDescriptor|number): DecoratorKind {
   // target => parameter
-  if(typeof propertyDescriptor === 'number'){
+  if(typeof propertyDescriptorOrIndex === 'number'){
     return 'parameter';
   }
 
   // target => method
-  if(propertyDescriptor && typeof propertyDescriptor === 'object'){
+  if(propertyDescriptorOrIndex !== undefined){
     return 'method';
   }
 
   // target => property
-  return 'property';
+  if(propertyKey !== undefined){
+    return 'property';
+  }
+
+  // target => class
+  return 'class';
 }
 
 /**
@@ -176,15 +188,16 @@ export function detectDecoratorKind(target: any, propertyKey?: string|symbol, pr
  * @return {DecoratorContext} An object containing the metadata for the decorator, including its kind, target, propertyKey, descriptor (if method), parameterIndex (if parameter), constructor, and prototype.
  */
 export function buildDecoratorContext<TValue = any>(args: any[], data: TValue): DecoratorContext<TValue> {
-  const [target, propertyKey, descriptor] = args;
-  const kind = detectDecoratorKind(args);
+  const [target, propertyKey, descriptorOrIndex] = args;
+  const kind = detectDecoratorKind(target, propertyKey, descriptorOrIndex);
   return {
     kind: kind,
     target: target,
-    decorateArgs: getMetadataDecorateArgs(target, propertyKey, descriptor),
+    classType: typeof target === 'function' ? target : target.constructor,
+    decorateArgs: getMetadataDecorateArgs(target, propertyKey, descriptorOrIndex),
     propertyKey: propertyKey,
-    propertyDescriptor: kind === 'method' ? (descriptor as PropertyDescriptor) : undefined,
-    parameterIndex: kind === 'parameter' ? (descriptor as number) : undefined,
+    propertyDescriptor: kind === 'method' ? (descriptorOrIndex as PropertyDescriptor) : undefined,
+    parameterIndex: kind === 'parameter' ? (descriptorOrIndex as number) : undefined,
     data: data,
   }
 }

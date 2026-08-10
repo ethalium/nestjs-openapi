@@ -1,5 +1,5 @@
-import {AnimalDto} from "./animal.dto";
-import {OAEnumProperty} from "../../../../../../lib";
+import { AnimalDto } from './animal.dto';
+import { OAEnumProperty } from '../../../../../../lib';
 
 export class DogDto extends AnimalDto {
 

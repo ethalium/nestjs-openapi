@@ -1,5 +1,5 @@
-import type {IOpenApiPropertyOptions} from "../../interfaces/property.interface";
-import {OACreateProperty} from "../property.decorator";
+import type { IOpenApiPropertyOptions } from '../../interfaces/property.interface';
+import { OACreateProperty } from '../property.decorator';
 
 export function OADatetimeProperty(options?: Omit<IOpenApiPropertyOptions, 'type'>) : PropertyDecorator;
 export function OADatetimeProperty(description?: string, options?: Omit<IOpenApiPropertyOptions, 'type'|'description'>) : PropertyDecorator;

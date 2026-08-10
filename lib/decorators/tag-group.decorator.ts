@@ -1,7 +1,7 @@
-import {createDecorator} from "../utils/decorator.utils";
-import type {IOpenApiTagGroupMetadata} from "../interfaces/common.interface";
-import {extractObject, extractString} from "../utils/type.utils";
-import {DECORATORS} from "../constants/metadata.constants";
+import { createDecorator } from '../utils/decorator.utils';
+import type { IOpenApiTagGroupMetadata } from '../interfaces/common.interface';
+import { extractObject, extractString } from '../utils/type.utils';
+import { DECORATORS } from '../constants/metadata.constants';
 
 /**
  * Creates and applies a decorator for OpenAPI Tag Group metadata, which organizes API endpoints under a specific tag group.

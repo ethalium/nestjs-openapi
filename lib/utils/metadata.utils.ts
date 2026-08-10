@@ -24,12 +24,12 @@ export function getMetadataTarget(target: any, propertyKey?: string | symbol, de
  *
  * @param {any} target - The target object on which metadata is being applied.
  * @param {string | symbol} [propertyKey] - The property key of the target, if applicable.
- * @param {PropertyDescriptor | number} [descriptor] - The property descriptor or a numeric index, if applicable.
+ * @param {PropertyDescriptor | number} [descriptorOrIndex] - The property descriptor or a numeric index, if applicable.
  * @return {[any, (string | symbol | undefined)]} An array containing the modified target and optionally the property key.
  */
-export function getMetadataDecorateArgs(target: any, propertyKey?: string|symbol, descriptor?: PropertyDescriptor|number): [target: any, propertyKey?: string|symbol] {
-  if(descriptor && typeof descriptor === 'object'){
-    return [getMetadataTarget(target, propertyKey, descriptor)];
+export function getMetadataDecorateArgs(target: any, propertyKey?: string|symbol, descriptorOrIndex?: PropertyDescriptor|number): [target: any, propertyKey?: string|symbol] {
+  if(descriptorOrIndex && typeof descriptorOrIndex === 'object'){
+    return [getMetadataTarget(target, propertyKey, descriptorOrIndex)];
   }
   return propertyKey ? [getMetadataTarget(target, propertyKey), propertyKey] : [getMetadataTarget(target, propertyKey)];
 }
@@ -160,16 +160,16 @@ export function MetadataAccessor<T = any>(metadataKey?: string|symbol) {
 export function MetadataMapAccessor<T = any, K extends keyof T = keyof T>(metadataKey?: string|symbol) {
   return new class MetadataMapAccessor {
     readonly key: string|symbol = metadataKey || Symbol();
-    getAll(target: any, propertyKey?: string | symbol): T|null {
-      return getMetadata(this.key, target, propertyKey) || null;
+    getAll(target: any, propertyKey?: string | symbol): T {
+      return getMetadata(this.key, target, propertyKey) || {} as T;
     }
     setAll(value: any, target: any, propertyKey?: string | symbol): T {
       return setMetadata(this.key, value, target, propertyKey);
     }
 
-    get(name: K, target: any, propertyKey?: string | symbol): T[K]|null {
+    get(name: K, target: any, propertyKey?: string | symbol): T[K]|undefined {
       const obj: any = this.getAll(target, propertyKey) || {};
-      return obj[name] || null;
+      return obj?.[name];
     }
 
     set(name: K, value: T[K], target: any, propertyKey?: string | symbol): T[K] {
@@ -193,6 +193,9 @@ export function MetadataListAccessor<T = any>(metadataKey?: string|symbol, uniqu
     readonly key: string|symbol = metadataKey || Symbol();
     get(target: any, propertyKey?: string | symbol): T[] {
       return getMetadataItems(this.key, target, propertyKey);
+    }
+    getOne(target: any, propertyKey?: string | symbol): T|undefined {
+      return getMetadataItems(this.key, target, propertyKey)?.[0];
     }
     set(items: T, target: any, propertyKey?: string | symbol): T;
     set(items: T[], target: any, propertyKey?: string | symbol): T[];

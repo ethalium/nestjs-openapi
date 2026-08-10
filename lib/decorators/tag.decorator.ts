@@ -1,8 +1,8 @@
-import {createDecorator} from "../utils/decorator.utils";
-import type {IOpenApiTagMetadata} from "../interfaces/common.interface";
-import {extractObject, extractString} from "../utils/type.utils";
-import {DECORATORS} from "../constants/metadata.constants";
-import {ApiTags} from "@nestjs/swagger";
+import { createDecorator } from '../utils/decorator.utils';
+import type { IOpenApiTagMetadata } from '../interfaces/common.interface';
+import { extractObject, extractString } from '../utils/type.utils';
+import { DECORATORS } from '../constants/metadata.constants';
+import { ApiTags } from '@nestjs/swagger';
 
 export function OATags(...tags: Array<string|IOpenApiTagMetadata>) : ClassDecorator & MethodDecorator {
   return createDecorator<Array<string|IOpenApiTagMetadata>, IOpenApiTagMetadata[]>({

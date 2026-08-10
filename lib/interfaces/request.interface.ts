@@ -1,7 +1,8 @@
-import type {IOpenApiTagGroups, IOpenApiTags} from "./common.interface";
-import type {IOpenApiHeaderOptions} from "./header.interface";
-import type {IOpenApiQueryOptions} from "./query.interface";
-import type {IOpenApiParamOptions} from "./param.interface";
+import type { IOpenApiTagGroups, IOpenApiTags } from './common.interface';
+import type { IOpenApiHeaderOptions } from './header.interface';
+import type { IOpenApiQueryOptions } from './query.interface';
+import type { IOpenApiParamOptions } from './param.interface';
+import { IOpenApiExtensionMetadata } from './extension.interface';
 
 export interface IOpenApiRequestOptions {
 
@@ -35,5 +36,11 @@ export interface IOpenApiRequestOptions {
    * @invokes @OAParams
    */
   params?: IOpenApiParamOptions;
+
+  /**
+   * OpenAPI extensions
+   * @invokes @ApiExtension
+   */
+  extensions?: Record<string, any> | Array<IOpenApiExtensionMetadata>;
 
 }

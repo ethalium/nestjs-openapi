@@ -1,8 +1,8 @@
-import type {IOpenApiResponseOptions, IOpenApiResponseType} from "../interfaces/common.interface";
-import {createDecorator} from "../utils/decorator.utils";
-import {extractAndResolveClassRef, extractObject} from "../utils/type.utils";
-import {ApiResponse} from "@nestjs/swagger";
-import {HttpStatus} from "@nestjs/common";
+import type { IOpenApiResponseOptions, IOpenApiResponseType } from '../interfaces/common.interface';
+import { createDecorator } from '../utils/decorator.utils';
+import { extractAndResolveClassRef, extractObject } from '../utils/type.utils';
+import { ApiResponse } from '@nestjs/swagger';
+import { HttpStatus } from '@nestjs/common';
 
 
 export function OAResponse(options: IOpenApiResponseOptions) : ClassDecorator & MethodDecorator;

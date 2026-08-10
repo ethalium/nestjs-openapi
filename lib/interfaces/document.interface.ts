@@ -1,8 +1,8 @@
-import type {SwaggerDocumentOptions} from "@nestjs/swagger";
-import type {OpenAPIObject} from "@nestjs/swagger";
-import type {TagObject} from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
-import type {IOpenApiStatus, IOpenApiTagGroupMetadata, IOpenApiTypeRefSingle} from "./common.interface";
-import type {Type} from "@nestjs/common";
+import type { OpenAPIObject, SwaggerDocumentOptions } from '@nestjs/swagger';
+import type { TagObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import type { IOpenApiStatus, IOpenApiTagGroupMetadata, IOpenApiTypeRefSingle } from './common.interface';
+import type { Type } from '@nestjs/common';
+import { IOpenApiTransformer } from '../transformers/base.transformer';
 
 export interface IOpenApiDocumentOptions extends SwaggerDocumentOptions {
 
@@ -66,6 +66,13 @@ export interface IOpenApiDocumentOptions extends SwaggerDocumentOptions {
    * @default true
    */
   responseOverrideModelNameFactory?: boolean | ((overrideName: string, responseType: string) => string);
+
+  /**
+   * An optional array of transformers that implement the `IOpenApiTransformer` interface.
+   * Each transformer is responsible for modifying or transforming OpenAPI document data
+   * to meet specific customization or processing requirements.
+   */
+  transformers?: IOpenApiTransformer[];
 
 }
 

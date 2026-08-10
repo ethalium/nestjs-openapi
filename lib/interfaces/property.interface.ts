@@ -1,4 +1,4 @@
-import type {ApiPropertyOptions} from "@nestjs/swagger";
+import type { ApiPropertyOptions } from '@nestjs/swagger';
 
 export type IOpenApiPropertyOptions = ApiPropertyOptions & {
 

@@ -1,11 +1,13 @@
-import type {IOpenApiRequestOptions} from "../interfaces/request.interface";
-import {createDecorator} from "../utils/decorator.utils";
-import {ApiExcludeController, ApiExcludeEndpoint} from "@nestjs/swagger";
-import {OAParams} from "./param.decorator";
-import {OATag} from "./tag.decorator";
-import {OATagGroup} from "./tag-group.decorator";
-import {OAHeaders} from "./header.decorator";
-import {OAQueries} from "./query.decorator";
+import type { IOpenApiRequestOptions } from '../interfaces/request.interface';
+import { createDecorator } from '../utils/decorator.utils';
+import { ApiExcludeController, ApiExcludeEndpoint } from '@nestjs/swagger';
+import { OAParams } from './param.decorator';
+import { OATag } from './tag.decorator';
+import { OATagGroup } from './tag-group.decorator';
+import { OAHeaders } from './header.decorator';
+import { OAQueries } from './query.decorator';
+import { IOpenApiExtensionMetadata } from '../interfaces/extension.interface';
+import { OAExtension } from './extension.decorator';
 
 /** @internal */
 export function OARequest(type: 'route'|'controller', options: IOpenApiRequestOptions): ClassDecorator & MethodDecorator {
@@ -44,6 +46,14 @@ export function OARequest(type: 'route'|'controller', options: IOpenApiRequestOp
       // add queries
       if(options.query){
         store.push(OAQueries(options.query));
+      }
+
+      // add extensions
+      if(options.extensions){
+        const extensions: IOpenApiExtensionMetadata[] = (Array.isArray(options.extensions) ? options.extensions : Object.entries(options.extensions).map(([key, properties]) => ({ key, properties })))
+        extensions.map(extension => {
+          store.push(OAExtension(extension.key, extension.properties));
+        });
       }
 
     }

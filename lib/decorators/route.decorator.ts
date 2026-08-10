@@ -1,13 +1,13 @@
-import {createDecorator} from "../utils/decorator.utils";
-import type {IOpenApiRouteLike} from "../interfaces/common.interface";
-import {extractFalse, extractObject, extractRoute} from "../utils/type.utils";
-import {RequestMapping, RequestMethod} from "@nestjs/common";
-import type {IOpenApiRouteOptions} from "../interfaces/route.interface";
-import {OACreatedResponse, OAOkResponse} from "./response.decorator";
-import {OABody} from "./body.decorator";
-import {OARequest} from "./request.decorator";
-import {ApiOperation} from "@nestjs/swagger";
-
+import { createDecorator } from '../utils/decorator.utils';
+import type { IOpenApiRouteLike } from '../interfaces/common.interface';
+import { extractFalse, extractObject, extractRoute } from '../utils/type.utils';
+import { RequestMapping, RequestMethod } from '@nestjs/common';
+import type { IOpenApiRouteOptions } from '../interfaces/route.interface';
+import { OACreatedResponse, OAOkResponse } from './response.decorator';
+import { OABody } from './body.decorator';
+import { OARequest } from './request.decorator';
+import { ApiOperation } from '@nestjs/swagger';
+import { OAOrigin } from './origin.decorator';
 
 export function OARoute(method: RequestMethod, path: IOpenApiRouteLike, options?: Omit<IOpenApiRouteOptions, 'path'> | false): MethodDecorator;
 export function OARoute(method: RequestMethod, options?: IOpenApiRouteOptions): MethodDecorator;
@@ -20,11 +20,14 @@ export function OARoute(method: RequestMethod, ...args: any[]): MethodDecorator 
     ),
     decorators: (options, store) => {
 
-      // add @Controller decorator
+      // add @RequestMapping decorator
       store.push(RequestMapping({
         method: method,
         path: options.data.path,
       }));
+
+      // add @OAOrigin decorator
+      store.push(OAOrigin());
 
       // add @OARequest decorator
       store.push(OARequest('route', options.data));

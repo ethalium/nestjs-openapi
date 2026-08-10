@@ -1,6 +1,6 @@
-import type {IOpenApiErrorOptions, IOpenApiErrorType} from "../../interfaces/common.interface";
-import {HttpStatus} from "@nestjs/common";
-import {OAError} from "../error.decorator";
+import type { IOpenApiErrorOptions, IOpenApiErrorType } from '../../interfaces/common.interface';
+import { HttpStatus } from '@nestjs/common';
+import { OAError } from '../error.decorator';
 
 
 export function OAForbidden(options?: Omit<IOpenApiErrorOptions, 'status'>) : ClassDecorator & MethodDecorator;

@@ -100,6 +100,33 @@ Represents optional response overrides that can be applied to refine or replace 
 #### `responseOverrideModelNameFactory`: (overrideName: string, responseType: string) => string
 A factory function that generates a custom model name for a response override. It allows customization of naming conventions for response overrides programmatically. Only applicable when using the `responseOverrides` option, for overrides that have a `subKey` defined, and if the `responseType` does either have a type or schema with `type` defined.
 
+---
+#### `transformers`: IOpenApiTransformer[]
+An optional array of transformers that implement the `IOpenApiTransformer` interface. Each transformer is responsible for modifying or transforming OpenAPI document data to meet specific customization or processing requirements.
+
+#### Transformers
+* `DocumentTransformer`: Modifies the entire OpenAPI document.
+* `OperationTransformer`: Modifies the OpenAPI operation.
+* `OperationExtensionTransformer`: Modifies the OpenAPI operation extension.
+
+#### Example:
+
+```typescript
+{
+  transformers: [
+    createDocumentTransformer({
+      transform: (document: OpenAPIObject) => document,
+    }),
+    createOperationTransformer({
+      transform: (context: IOpenApiOperationTransformContext) => context.operation,
+    }),
+    createOperationExtensionTransformer({
+      extension: 'x-permissions',
+      transform: (context: IOpenApiOperationExtensionTransformContext) => context.properties,
+    })
+  ]
+}
+```
 
 ## Decorators
 Decorators are used to add additional metadata to the controllers and endpoints. Some decorators are not documented here, because they're mainly used internally.
@@ -224,4 +251,16 @@ Adds the `tagGroups` metadata to the controller or method to define the OpenAPI 
 @OATagGroup('Cats API')
 @Module({...})
 export class CatsModule {}
+```
+
+### `@OAExtension` *Controller*, *Method*
+Adds a custom OpenAPI extension by invoking `@ApiExtension` and adding additional metadata to it to use a `transformer` to manipulate the operation based on the extension.
+* *Controller*: Adds the extension to the controller.
+* *Method*: Adds the extension to the method.
+
+#### Example:
+```typescript
+@OAExtension('x-permissions', ['read'])
+@OAController({...})
+export class CatsController {}
 ```

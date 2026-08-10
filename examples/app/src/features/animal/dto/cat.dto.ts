@@ -1,6 +1,5 @@
-import {AnimalDto} from "./animal.dto";
-import { OAArrayProperty, OAEnumProperty, OAProperty, OATypeProperty } from '../../../../../../lib';
-import { ApiProperty } from '@nestjs/swagger';
+import { AnimalDto } from './animal.dto';
+import { OAArrayProperty, OAEnumProperty, OATypeProperty } from '../../../../../../lib';
 
 export class CatDto extends AnimalDto {
 
