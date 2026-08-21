@@ -1,4 +1,4 @@
-import { IOpenApiTransformerBase } from './base.transformer';
+import { combineTransformers, IOpenApiTransformer, IOpenApiTransformerBase } from './base.transformer';
 import { OpenAPIObject } from '@nestjs/swagger';
 
 export interface IOpenApiDocumentTransformer extends IOpenApiTransformerBase {
@@ -23,4 +23,8 @@ export function createDocumentTransformer(options: Omit<IOpenApiDocumentTransfor
     ...options,
     kind: 'document',
   };
+}
+
+export function combineDocumentTransformers(...transformers: IOpenApiTransformer<IOpenApiDocumentTransformer>[]): IOpenApiDocumentTransformer[] {
+  return combineTransformers<IOpenApiDocumentTransformer>(transformers);
 }

@@ -1,11 +1,11 @@
-import type { ApiResponseOptions } from '@nestjs/swagger';
-import { DocumentBuilder } from '@nestjs/swagger';
 import type {
+  ApiResponseOptions,
   ExtensionLocation,
   ParameterObject,
   SecuritySchemeObject,
   ServerVariableObject,
-} from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+} from '@nestjs/swagger';
+import { DocumentBuilder } from '@nestjs/swagger';
 import type { OpenApiDocument } from '../interfaces/document.interface';
 
 export interface IOpenApiDocumentBuilder {

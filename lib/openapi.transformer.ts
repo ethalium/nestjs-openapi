@@ -1,20 +1,32 @@
 import { OpenAPIObject } from '@nestjs/swagger';
-import { IOpenApiTransformer } from './transformers/base.transformer';
-import { OpenApiScanner } from './openapi.scanner';
+import { combineTransformers, IOpenApiTransformer, IOpenApiTransformerType } from './transformers/base.transformer';
 import { IOpenApiOperationTransformContext } from './transformers/operation.transformer';
-import { EXTENSIONS } from './constants/extensions.constants';
-import { STORES } from './constants/stores.constants';
-import { DECORATORS } from './constants/metadata.constants';
 import { IOpenApiOperationExtensionTransformContext } from './transformers/operation-extension.transformer';
+import { DECORATORS, EXTENSIONS, STORES } from './openapi.constants';
+import { MoveQueryMethodToExtensionBefore32 } from './transformers/builtin/move-query-method-to-extension-before-32';
+import { EnsureDescription } from './transformers/builtin/ensure-description';
+import { isOpenApiOperationBuiltIn } from './utils/version.utils';
 
 export class OpenApiTransformer {
-  constructor(
-    private readonly scanner: OpenApiScanner,
-    private readonly transformers: IOpenApiTransformer[],
-  ){
-    this.transformers = [...this.transformers].sort(
+  private readonly customTransformers!: IOpenApiTransformerType[];
+  private readonly staticTransformers: IOpenApiTransformerType[] = [
+    EnsureDescription,
+    MoveQueryMethodToExtensionBefore32,
+  ];
+
+  constructor(transformers: IOpenApiTransformer){
+    this.customTransformers = combineTransformers(transformers).sort(
       (a, b) => (a.order ?? Number.POSITIVE_INFINITY) - (b.order ?? Number.POSITIVE_INFINITY)
     );
+  }
+
+  /**
+   * Retrieves an array of OpenAPI transformers by merging static and custom transformers.
+   *
+   * @return {IOpenApiTransformerType[]} A flattened array containing both static and custom OpenAPI transformers.
+   */
+  private get transformers(): IOpenApiTransformerType[] {
+    return [this.staticTransformers, this.customTransformers].flat();
   }
 
   /**
@@ -29,14 +41,20 @@ export class OpenApiTransformer {
     // transform document
     const documentTransformers = this.transformers.filter(_ => _.kind === 'document');
     for(const transformer of documentTransformers){
-      document = transformer.transform?.(document) || document;
+      const transformed = transformer.transform?.(document);
+      if(transformed){
+        document = transformed;
+      }
     }
 
     // transform operations
     const operationTransformers = this.transformers.filter(_ => _.kind === 'operation');
     for(const context of this.getOperationContexts(document)) {
       for(const transformer of operationTransformers) {
-        context.pathObject[context.method] = transformer.transform?.(context) || context.operationObject;
+        const transformed = transformer.transform?.(context);
+        if(transformed){
+          context.pathObject[context.method] = transformed;
+        }
       }
     }
 
@@ -51,7 +69,10 @@ export class OpenApiTransformer {
           propertiesFromMethod: context.originPropertyDescriptor ? DECORATORS.OPENAPI.EXTENSIONS.get(transformer.extension, context.originPropertyDescriptor.value)?.properties : undefined,
           properties: context.operationObject[transformer.extension],
         };
-        context.operationObject[transformer.extension] = transformer.transform?.(extensionContext) ?? context.operationObject[transformer.extension];
+        const transformed = transformer.transform?.(extensionContext);
+        if(transformed){
+          context.operationObject[transformer.extension] = transformed;
+        }
       }
       for(const extension of activeTransformers.filter(_ => _.consumeExtension === false).map(_ => _.extension)) {
         if(extension in context.operationObject) {
@@ -76,7 +97,7 @@ export class OpenApiTransformer {
     const operations: IOpenApiOperationTransformContext[] = [];
     for(const [path, pathObject] of Object.entries(document.paths)) {
       for(const [operation, operationObject] of Object.entries(pathObject)){
-        if(operationObject && typeof operationObject === 'object' && !Array.isArray(operationObject)){
+        if(isOpenApiOperationBuiltIn(operation) && operationObject && typeof operationObject === 'object' && !Array.isArray(operationObject)){
           const originClassExtensionName = EXTENSIONS.ORIGIN_KIND('class');
           const originPropertyDescriptorExtensionName = EXTENSIONS.ORIGIN_KIND('method');
           const originClass = (originClassExtensionName in operationObject) ? STORES.ORIGINS.get(operationObject[originClassExtensionName])?.classType || null : null;
@@ -137,7 +158,7 @@ export class OpenApiTransformer {
 
       // remove origin kinds from array
       if(Array.isArray(value)){
-        obj[key] = value.filter((item) => {
+        obj[key] = value.map((item) => {
           if(item && typeof item === 'object'){
             return this.removeOriginKinds(item);
           }

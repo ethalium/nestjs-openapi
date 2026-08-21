@@ -1,6 +1,5 @@
-import type { ParameterObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import type { IOpenApiType } from './common.interface';
-import type { SwaggerEnumType } from '@nestjs/swagger/dist/types/swagger-enum.type';
+import { IOpenApiAllowedEnumTypes, IOpenApiType } from './common.interface';
+import type { ParameterObject } from '@nestjs/swagger';
 
 export type IOpenApiQueryOptions = IOpenApiQuerySpec;
 
@@ -11,7 +10,7 @@ export interface IOpenApiQuerySpec {
 export interface IOpenApiQueryMetadata extends Omit<ParameterObject, 'in'> {
   type?: IOpenApiType;
   format?: string;
-  enum?: SwaggerEnumType;
+  enum?: IOpenApiAllowedEnumTypes;
   enumName?: string;
   isArray?: boolean;
 }

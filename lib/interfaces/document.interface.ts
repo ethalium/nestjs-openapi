@@ -1,10 +1,19 @@
-import type { OpenAPIObject, SwaggerDocumentOptions } from '@nestjs/swagger';
-import type { TagObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import type { OpenAPIObject, SwaggerDocumentOptions, TagObject } from '@nestjs/swagger';
 import type { IOpenApiStatus, IOpenApiTagGroupMetadata, IOpenApiTypeRefSingle } from './common.interface';
 import type { Type } from '@nestjs/common';
-import { IOpenApiTransformer } from '../transformers/base.transformer';
+import type { IOpenApiTransformer } from '../transformers/base.transformer';
 
 export interface IOpenApiDocumentOptions extends SwaggerDocumentOptions {
+
+  /**
+   * Specifies the target format for converting OpenAPI documents.
+   * This property defines the intended output type that the OpenAPI
+   * converter should generate when transforming an input specification.
+   *
+   * The value assigned to `convertTo` must be compatible with the
+   * acceptable targets supported by the OpenAPI conversion utility.
+   */
+  convertTo?: '3.1.0' | '3.2.0';
 
   /**
    * Indicates whether the tags in a tag group should be unique.

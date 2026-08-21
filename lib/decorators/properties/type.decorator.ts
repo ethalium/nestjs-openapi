@@ -1,7 +1,7 @@
 import type { IOpenApiTypeRef } from '../../interfaces/common.interface';
-import type { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { extractString } from '../../utils/type.utils';
 import { OACreateProperty } from '../property.decorator';
+import type { SchemaObject } from '@nestjs/swagger';
 
 export function OATypeProperty(typeRef: IOpenApiTypeRef, schema?: Omit<SchemaObject, 'type'|'$ref'>) : PropertyDecorator;
 export function OATypeProperty(typeRef: IOpenApiTypeRef, description?: string, schema?: Omit<SchemaObject, 'type'|'$ref'|'description'>) : PropertyDecorator;

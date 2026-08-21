@@ -1,4 +1,4 @@
-import { OAController, OAInternalServerError } from '../../../../../../lib';
+import { OAController, OAInternalServerError, OAQueryMethod } from '../../../../../../lib';
 import { OAGet } from '../../../../../../lib/decorators/routes/get.decorator';
 import { DogDto } from '../dto/dog.dto';
 import { RbacRequires } from '../../../main.rbac';
@@ -11,7 +11,7 @@ import { RbacRequires } from '../../../main.rbac';
 export class DogController {
 
   @RbacRequires(['animal.dog.list'])
-  @OAGet({
+  @OAQueryMethod({
     summary: 'List Dogs',
     description: 'Returns a list of dogs.',
     response: [DogDto]

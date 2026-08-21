@@ -1,4 +1,4 @@
-import { IOpenApiTransformerBase } from './base.transformer';
+import { combineTransformers, IOpenApiTransformer, IOpenApiTransformerBase } from './base.transformer';
 import { IOpenApiOperationTransformContext } from './operation.transformer';
 import { IOpenApiExtensionKey } from '../interfaces/extension.interface';
 
@@ -41,4 +41,8 @@ export function createOperationExtensionTransformer<TProperties = unknown, TProp
     ...options,
     kind: 'operation-extension',
   };
+}
+
+export function combineOperationExtensionTransformers(...transformers: IOpenApiTransformer<IOpenApiOperationExtensionTransformer>[]): IOpenApiOperationExtensionTransformer[] {
+  return combineTransformers<IOpenApiOperationExtensionTransformer>(transformers);
 }

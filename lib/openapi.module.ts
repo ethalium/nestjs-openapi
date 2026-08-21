@@ -8,6 +8,7 @@ import type { IOpenApiDocumentOptions, OpenApiDocument } from './interfaces/docu
 import { OpenApiBuilder } from './openapi.builder';
 import { OpenApiTransformer } from './openapi.transformer';
 import { OpenApiScanner } from './openapi.scanner';
+import { OpenApiConverter } from './openapi.converter';
 
 
 @Module({})
@@ -45,10 +46,18 @@ export class OpenApiModule {
     const builder = new OpenApiBuilder(scanner, config, documentOptions);
 
     // build document
-    const document = SwaggerModule.createDocument(app, builder.build(), documentOptions);
+    let document = SwaggerModule.createDocument(app, builder.build(), documentOptions);
 
-    // transform and return document
-    return (new OpenApiTransformer(scanner, documentOptions?.transformers || [])).transform(document);
+    // transform document
+    document = (new OpenApiTransformer(documentOptions?.transformers || [])).transform(document);
+
+    // convert document
+    if(options?.convertTo){
+      document = (new OpenApiConverter()).convert(options.convertTo, document);
+    }
+
+    // return document
+    return document;
 
   }
 

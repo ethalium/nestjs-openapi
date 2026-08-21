@@ -1,7 +1,7 @@
 import { createDecorator } from '../utils/decorator.utils';
 import { IOpenApiExtensionKey, IOpenApiExtensionMetadata } from '../interfaces/extension.interface';
 import { ApiExtension } from '@nestjs/swagger';
-import { DECORATORS } from '../constants/metadata.constants';
+import { DECORATORS } from '../openapi.constants';
 
 export function OAExtension<TProperties = any>(metadata: IOpenApiExtensionMetadata<TProperties>): ClassDecorator & MethodDecorator;
 export function OAExtension<TProperties = any>(key: IOpenApiExtensionKey, properties?: TProperties): ClassDecorator & MethodDecorator;

@@ -61,6 +61,10 @@ The `createDocument` method is used to create the OpenAPI document. It runs the 
 ### Options
 
 ---
+#### `convertTo`: '3.1.0' | '3.2.0' (**experimental**)
+Converts the OpenAPI object to the defined version if possible. This feature is experimental and will probably not work for all scenarios.
+
+---
 #### `uniqueTagGroupTags`: boolean
 Indicates if the tags in a tagGroup should be unique for this group. 
 * If set to `true`, all tags in a specific tagGroup will have the group name as a prefix and the original name will be set as 'x-displayName' to avoid duplicate tags in the generated OpenAPI document.
@@ -148,8 +152,8 @@ export class CatsController {
 ```
 
 ---
-### `@OARoute` `@OAGet` `@OAPost` `@OAPut` `@OAPatch` `@OADelete` *Method*
-Invokes the corresponding `@Get`, `@Post`, `@Put`, `@Patch`, `@Delete` decorators and adds the possibility to define OpenAPI metadata for the endpoint like `summary`, `description`, `parameters`, `responses`, ect.`
+### `@OARoute` `@OAQueryMethod` `@OAGet` `@OAPost` `@OAPut` `@OAPatch` `@OADelete` *Method*
+Invokes the corresponding `@QueryMethod`, ``@Get`, `@Post`, `@Put`, `@Patch`, `@Delete` decorators and adds the possibility to define OpenAPI metadata for the endpoint like `summary`, `description`, `parameters`, `responses`, ect.`
 
 #### Schemas
 * `@OAGet(options?: OARouteOptions)`

@@ -1,5 +1,5 @@
-import { IOpenApiTransformerBase } from './base.transformer';
-import { OperationObject, PathItemObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import { combineTransformers, IOpenApiTransformer, IOpenApiTransformerBase } from './base.transformer';
+import type { OperationObject, PathItemObject } from '@nestjs/swagger';
 import { OpenAPIObject } from '@nestjs/swagger';
 import { Type } from '@nestjs/common';
 
@@ -36,4 +36,8 @@ export function createOperationTransformer(options: Omit<IOpenApiOperationTransf
     ...options,
     kind: 'operation',
   };
+}
+
+export function combineOperationTransformers(...transformers: IOpenApiTransformer<IOpenApiOperationTransformer>[]): IOpenApiOperationTransformer[] {
+  return combineTransformers<IOpenApiOperationTransformer>(transformers);
 }

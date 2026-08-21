@@ -1,8 +1,7 @@
 import { AllDecorator, createDecorator } from '../utils/decorator.utils';
 import { ApiExtension } from '@nestjs/swagger';
 import { IOpenApiOriginMetadata } from '../interfaces/origin.interface';
-import { EXTENSIONS } from '../constants/extensions.constants';
-import { STORES } from '../constants/stores.constants';
+import { EXTENSIONS, STORES } from '../openapi.constants';
 
 let counter = 0;
 

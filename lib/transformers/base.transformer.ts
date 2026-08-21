@@ -6,4 +6,10 @@ export interface IOpenApiTransformerBase {
   readonly order?: number;
 }
 
-export type IOpenApiTransformer = IOpenApiDocumentTransformer|IOpenApiOperationTransformer|IOpenApiOperationExtensionTransformer;
+export type IOpenApiTransformer<T extends IOpenApiTransformerType = IOpenApiTransformerType> = T | IOpenApiTransformer<T>[];
+export type IOpenApiTransformerType = IOpenApiDocumentTransformer|IOpenApiOperationTransformer|IOpenApiOperationExtensionTransformer;
+
+export function combineTransformers<T extends IOpenApiTransformerType>(...transformers: IOpenApiTransformer<T>[]): T[] {
+  // @ts-ignore
+  return transformers.flat(Infinity);
+}

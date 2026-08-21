@@ -9,13 +9,13 @@ import type { IOpenApiScannedController } from './openapi.scanner';
 import { OpenApiScanner } from './openapi.scanner';
 import type { IOpenApiTagGroupMetadata, IOpenApiTagMetadata } from './interfaces/common.interface';
 import type { ClassEntryMethod } from './utils/class.utils';
-import { DECORATORS } from './constants/metadata.constants';
 import { createSlug, pascalCase, uniqueMergeBy } from './utils/common.utils';
 import type { ApiResponseOptions } from '@nestjs/swagger';
 import { getSchemaPath, OmitType } from '@nestjs/swagger';
 import { isClassRef, isPlainObject } from './utils/type.utils';
 import { generateSchemaType } from './utils/schema.utils';
 import { IOpenApiExtensionMetadata } from './interfaces/extension.interface';
+import { DECORATORS } from './openapi.constants';
 
 interface IOpenApiBuilderTagGroup extends Omit<IOpenApiTagGroupMetadata, 'tags'> {
   tags: IOpenApiTagMetadata[];

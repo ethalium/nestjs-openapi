@@ -1,7 +1,7 @@
-import type { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { extractObject, extractString } from '../../utils/type.utils';
 import type { IOpenApiPropertyOptions } from '../../interfaces/property.interface';
 import { OACreateProperty } from '../property.decorator';
+import type { SchemaObject } from '@nestjs/swagger';
 
 export function OAArrayProperty(schema?: SchemaObject) : PropertyDecorator;
 export function OAArrayProperty(description?: string, schema?: SchemaObject) : PropertyDecorator;

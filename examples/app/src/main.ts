@@ -10,7 +10,7 @@ async function bootstrap() {
 
   // create application
   const app = await NestFactory.create(MainModule, {
-    logger: false,
+    // logger: false,
   });
 
   // create document builder
@@ -22,6 +22,7 @@ async function bootstrap() {
 
   // create document
   const document = OpenApiModule.createDocument(app, builder.build(), {
+    convertTo: '3.2.0',
     responseOverrides: {
       '2XX': [SuccessResponse, 'data'],
       'serverError': ErrorResponse

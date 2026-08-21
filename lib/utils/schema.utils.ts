@@ -1,8 +1,7 @@
 import type { IOpenApiTypeRefSingle } from '../interfaces/common.interface';
-import type { ReferenceObject, SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 import { isClassRef, isPlainObject, isPrimitive, resolveClassRef } from './type.utils';
 import type { Type } from '@nestjs/common';
-import type { ApiResponseOptions } from '@nestjs/swagger';
+import type { ApiResponseOptions, ReferenceObject, SchemaObject } from '@nestjs/swagger';
 import { getSchemaPath } from '@nestjs/swagger';
 
 export function createSchemaRefs(refs: Array<IOpenApiTypeRefSingle|SchemaObject|ReferenceObject>, options?: {

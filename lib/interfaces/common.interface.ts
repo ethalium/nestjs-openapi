@@ -1,5 +1,10 @@
 import type { Type } from '@nestjs/common';
-import type { ApiResponseExamples, ApiResponseNoStatusOptions, ApiResponseOptions } from '@nestjs/swagger';
+import type {
+  ApiPropertyOptions,
+  ApiResponseExamples,
+  ApiResponseNoStatusOptions,
+  ApiResponseOptions,
+} from '@nestjs/swagger';
 
 /**
  * Represents the status of an OpenAPI operation.
@@ -143,3 +148,13 @@ export interface IOpenApiTagGroupMetadata {
   description?: string;
   tags?: string[];
 }
+
+/**
+ * Represents a type for allowed enum values in OpenAPI specifications.
+ * This type is derived from the 'enum' property in ApiPropertyOptions
+ * and ensures that it cannot be null or undefined.
+ *
+ * Used to define a list of valid enumeration values for an API property
+ * in the OpenAPI context.
+ */
+export type IOpenApiAllowedEnumTypes = NonNullable<ApiPropertyOptions['enum']>;
