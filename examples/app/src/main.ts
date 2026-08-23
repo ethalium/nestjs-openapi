@@ -23,7 +23,7 @@ async function bootstrap() {
 
   // create document
   const document = OpenApiModule.createDocument(app, builder.build(), {
-    //convertTo: '3.1.0',
+    convertTo: '3.2.0',
     responseOverrides: {
       '2XX': [SuccessResponse, 'data'],
       'serverError': ErrorResponse
