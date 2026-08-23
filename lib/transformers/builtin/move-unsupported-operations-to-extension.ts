@@ -2,7 +2,7 @@ import { createOperationTransformer } from '../operation.transformer';
 import { parseOpenApiVersion } from '../../utils/version.utils';
 import { EXTENSIONS, OPENAPI_VERSIONS } from '../../openapi.constants';
 
-export const MoveQueryMethodToExtensionBefore32 = createOperationTransformer({
+export const MoveUnsupportedOperationsToExtension = createOperationTransformer({
   transform: (context) => {
 
     // parse document version
@@ -13,11 +13,11 @@ export const MoveQueryMethodToExtensionBefore32 = createOperationTransformer({
       return;
     }
 
-    // move custom methods to extension
-    if(!version.allowedMethods.includes(context.method)){
+    // move custom operations to extension
+    if(!version.allowedOperations.includes(context.operation)){
       context.pathObject[EXTENSIONS.ADDITIONAL_OPERATIONS] ??= {};
-      context.pathObject[EXTENSIONS.ADDITIONAL_OPERATIONS][context.method.trim().toUpperCase()] = context.operationObject;
-      delete context.pathObject[context.method];
+      context.pathObject[EXTENSIONS.ADDITIONAL_OPERATIONS][context.operation.trim().toUpperCase()] = context.operationObject;
+      delete context.pathObject[context.operation];
     }
 
   }

@@ -40,6 +40,11 @@ export function isOpenApiVersion(expectedVersion: string, document: OpenAPIObjec
 /** @internal */
 export function isOpenApiOperationBuiltIn(operation: string, version?: string): boolean {
   const operationTransformed = operation.trim().toLowerCase();
-  const allowedOperations = (version ? OPENAPI_VERSIONS[parseOpenApiVersion(version).family] : Object.values(OPENAPI_VERSIONS).flat())?.allowedOperations || [];
-  return allowedOperations.includes(operationTransformed);
+  const versionResolved = version ? parseOpenApiVersion({ openapi: version }) : undefined;
+  const allowedOperations = new Set(
+    versionResolved
+    ? OPENAPI_VERSIONS[versionResolved.family]?.allowedOperations || []
+    : Object.values(OPENAPI_VERSIONS).flat().map(_ => _.allowedOperations).flat()
+  );
+  return allowedOperations.has(operationTransformed);
 }

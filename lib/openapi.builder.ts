@@ -141,7 +141,7 @@ export class OpenApiBuilder {
       (this.config['x-tagGroups'] || []),
       tagGroups.map(group => ({
         name: group.name,
-        description: group.description,
+        description: group.description || undefined,
         tags: group.tags.map(tag => tag.name)
       }))
     ].flat());
@@ -175,7 +175,7 @@ export class OpenApiBuilder {
       tags.map(tag => ({
         name: tag.name,
         'x-displayName': tag.displayName,
-        description: tag.description,
+        description: tag.description || undefined,
         'x-traitTag': tag.trait,
       }))
     ].flat());

@@ -66,7 +66,7 @@ function processPathItem(pathItem: any): void {
   processParameters(pathItem.parameters);
 
   Object.entries(pathItem[EXTENSIONS.ADDITIONAL_OPERATIONS] || {}).forEach(([method, operation]) => {
-    if(OPENAPI_VERSION_CONFIG.allowedMethods.includes(method.trim().toLowerCase())){
+    if(OPENAPI_VERSION_CONFIG.allowedOperations.includes(method.trim().toLowerCase())){
       pathItem[method] = operation;
       delete pathItem[EXTENSIONS.ADDITIONAL_OPERATIONS][method];
     }

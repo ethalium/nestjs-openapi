@@ -45,15 +45,21 @@ export class OpenApiModule {
     // create builder
     const builder = new OpenApiBuilder(scanner, config, documentOptions);
 
+    // create transformer
+    const transformer = new OpenApiTransformer(documentOptions?.transformers || []);
+
+    // create converter
+    const converter = new OpenApiConverter();
+
     // build document
     let document = SwaggerModule.createDocument(app, builder.build(), documentOptions);
 
     // transform document
-    document = (new OpenApiTransformer(documentOptions?.transformers || [])).transform(document);
+    document = transformer.transform(document);
 
     // convert document
     if(options?.convertTo){
-      document = (new OpenApiConverter()).convert(options.convertTo, document);
+      document = converter.convert(options.convertTo, document);
     }
 
     // return document

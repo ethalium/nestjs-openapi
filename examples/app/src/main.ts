@@ -5,6 +5,7 @@ import { apiReference } from '@scalar/nestjs-api-reference';
 import { OpenApiModule } from '../../../lib/openapi.module';
 import { ErrorResponse, SuccessResponse } from './main.types';
 import { RbacTransformer } from './main.rbac';
+import { writeFileSync } from 'node:fs';
 
 async function bootstrap() {
 
@@ -22,7 +23,7 @@ async function bootstrap() {
 
   // create document
   const document = OpenApiModule.createDocument(app, builder.build(), {
-    convertTo: '3.2.0',
+    //convertTo: '3.1.0',
     responseOverrides: {
       '2XX': [SuccessResponse, 'data'],
       'serverError': ErrorResponse

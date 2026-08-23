@@ -66,7 +66,7 @@ function promoteAdditionalOperations(pathItem: any): void {
 
   // promote additional operations from extension to pathItem
   Object.entries(extensionOperations).forEach(([method, operation]) => {
-    if(OPENAPI_VERSION_CONFIG.allowedMethods.includes(method.trim().toLowerCase())) {
+    if(OPENAPI_VERSION_CONFIG.allowedOperations.includes(method.trim().toLowerCase())) {
       if (method.trim().toLowerCase() in pathItem) {
         throw new Error(`Cannot convert ${EXTENSIONS.ADDITIONAL_OPERATIONS}.${method}: the Path Item already defines this method.`);
       }

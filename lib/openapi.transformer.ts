@@ -1,17 +1,17 @@
-import { OpenAPIObject } from '@nestjs/swagger';
+import { OpenAPIObject, OperationObject } from '@nestjs/swagger';
 import { combineTransformers, IOpenApiTransformer, IOpenApiTransformerType } from './transformers/base.transformer';
 import { IOpenApiOperationTransformContext } from './transformers/operation.transformer';
 import { IOpenApiOperationExtensionTransformContext } from './transformers/operation-extension.transformer';
 import { DECORATORS, EXTENSIONS, STORES } from './openapi.constants';
-import { MoveQueryMethodToExtensionBefore32 } from './transformers/builtin/move-query-method-to-extension-before-32';
-import { EnsureDescription } from './transformers/builtin/ensure-description';
+import { MoveUnsupportedOperationsToExtension } from './transformers/builtin/move-unsupported-operations-to-extension';
+import { EnsureDescriptionIsNotEmpty } from './transformers/builtin/ensure-description-is-not-empty';
 import { isOpenApiOperationBuiltIn } from './utils/version.utils';
 
 export class OpenApiTransformer {
   private readonly customTransformers!: IOpenApiTransformerType[];
   private readonly staticTransformers: IOpenApiTransformerType[] = [
-    EnsureDescription,
-    MoveQueryMethodToExtensionBefore32,
+    EnsureDescriptionIsNotEmpty,
+    MoveUnsupportedOperationsToExtension,
   ];
 
   constructor(transformers: IOpenApiTransformer){
@@ -53,7 +53,7 @@ export class OpenApiTransformer {
       for(const transformer of operationTransformers) {
         const transformed = transformer.transform?.(context);
         if(transformed){
-          context.pathObject[context.method] = transformed;
+          context.pathObject[context.operation] = transformed;
         }
       }
     }
@@ -94,27 +94,53 @@ export class OpenApiTransformer {
    * each representing metadata and associations for API operations defined in the document.
    */
   private getOperationContexts(document: OpenAPIObject): IOpenApiOperationTransformContext[] {
-    const operations: IOpenApiOperationTransformContext[] = [];
-    for(const [path, pathObject] of Object.entries(document.paths)) {
-      for(const [operation, operationObject] of Object.entries(pathObject)){
-        if(isOpenApiOperationBuiltIn(operation) && operationObject && typeof operationObject === 'object' && !Array.isArray(operationObject)){
-          const originClassExtensionName = EXTENSIONS.ORIGIN_KIND('class');
-          const originPropertyDescriptorExtensionName = EXTENSIONS.ORIGIN_KIND('method');
-          const originClass = (originClassExtensionName in operationObject) ? STORES.ORIGINS.get(operationObject[originClassExtensionName])?.classType || null : null;
-          const originPropertyDescriptor = (originPropertyDescriptorExtensionName in operationObject) ? STORES.ORIGINS.get(operationObject[originPropertyDescriptorExtensionName])?.propertyDescriptor || null : null;
-          operations.push({
-            document: document,
-            path: path,
-            method: operation,
-            pathObject: pathObject,
-            operationObject: operationObject,
-            originClass: originClass,
-            originPropertyDescriptor: originPropertyDescriptor
-          });
+
+    // create array for final contexts
+    const contexts: IOpenApiOperationTransformContext[] = [];
+
+    // extract operations and additional operations
+    for(const [path, pathObject] of Object.entries(document.paths || {})) {
+
+      // create map for operations including generated and custom operations
+      const additionalOperations = pathObject[EXTENSIONS.ADDITIONAL_OPERATIONS] || {};
+      const operations = new Map<string, OperationObject>();
+
+      // find generated operations
+      Object.entries(pathObject).forEach(([operation, operationObject]) => {
+        if(operationObject && typeof operationObject === 'object' && !Array.isArray(operationObject) && EXTENSIONS.ORIGIN_KIND('class') in operationObject){
+          operations.set(operation, operationObject);
         }
-      }
+      });
+
+      // find custom operations
+      Object.entries(pathObject[EXTENSIONS.ADDITIONAL_OPERATIONS] || {}).forEach(([operation, operationObject]) => {
+        if(operationObject && typeof operationObject === 'object' && !Array.isArray(operationObject)){
+          operations.set(operation, operationObject as OperationObject);
+        }
+      });
+
+      // create contexts for operations
+      Array.from(operations.entries()).forEach(([operation, operationObject]) => {
+        const originClass = STORES.ORIGINS.get(operationObject[EXTENSIONS.ORIGIN_KIND('class')] ?? -1)?.classType || null;
+        const originPropertyDescriptor = STORES.ORIGINS.get(operationObject[EXTENSIONS.ORIGIN_KIND('method')] ?? -1)?.propertyDescriptor || null;
+        contexts.push({
+          document: document,
+          path: path,
+          pathObject: pathObject,
+          operation: operation,
+          operationObject: operationObject,
+          isAdditionalOperation: (operation in additionalOperations),
+          additionalOperations: additionalOperations,
+          originClass: originClass,
+          originPropertyDescriptor: originPropertyDescriptor,
+        });
+      });
+
     }
-    return operations;
+
+    // return found contexts
+    return contexts;
+
   }
 
   /**

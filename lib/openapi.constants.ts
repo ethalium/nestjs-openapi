@@ -12,13 +12,13 @@ import { DecoratorKind } from './utils/decorator.utils';
  */
 export const OPENAPI_VERSIONS = {
   '3.0.0': {
-    allowedMethods: ['get', 'post', 'put', 'patch', 'delete', 'options', 'head'],
+    allowedOperations: ['get', 'post', 'put', 'patch', 'delete', 'options', 'head'],
   },
   '3.1.0': {
-    allowedMethods: ['get', 'post', 'put', 'patch', 'delete', 'options', 'head'],
+    allowedOperations: ['get', 'post', 'put', 'patch', 'delete', 'options', 'head'],
   },
   '3.2.0': {
-    allowedMethods: ['get', 'post', 'put', 'patch', 'delete', 'options', 'head', 'trace', 'query'],
+    allowedOperations: ['get', 'post', 'put', 'patch', 'delete', 'options', 'head', 'trace', 'query'],
   },
 }
 

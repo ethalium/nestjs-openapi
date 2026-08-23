@@ -23,9 +23,12 @@ export interface IOpenApiOperationTransformer extends IOpenApiTransformerBase {
 export interface IOpenApiOperationTransformContext {
   readonly document: OpenAPIObject;
   readonly path: string;
-  readonly method: string;
   readonly pathObject: PathItemObject;
+  readonly operation: string;
   readonly operationObject: OperationObject;
+
+  readonly isAdditionalOperation: boolean;
+  readonly additionalOperations: Record<string, OperationObject>;
 
   readonly originClass: Type|null;
   readonly originPropertyDescriptor: PropertyDescriptor|null;
