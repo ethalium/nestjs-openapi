@@ -5,7 +5,7 @@ import type { ApiPropertyOptions, ApiResponseOptions } from '@nestjs/swagger';
 import { DECORATORS as SWAGGER_DECORATORS } from '@nestjs/swagger';
 import type { Type } from '@nestjs/common';
 import { IOpenApiOriginMetadata } from './interfaces/origin.interface';
-import { DecoratorContext, DecoratorKind } from './utils/decorator.utils';
+import { DecoratorKind } from './utils/decorator.utils';
 
 /**
  * An object that defines supported OpenAPI versions and their respective configurations.
@@ -31,7 +31,7 @@ export const OPENAPI_VERSIONS = {
  */
 export const STORES = {
   ORIGINS: new Map<number, IOpenApiOriginMetadata>(),
-  MODEL_PROPERTIES_EXTENSIONS: new Map<Type, Record<string|symbol, Record<string, DecoratorContext<IOpenApiExtensionMetadata>>>>(),
+  MODELS: new Array<Type>(),
 }
 
 /**
@@ -43,7 +43,6 @@ export const DECORATORS = {
   OPENAPI: {
     TAGS: MetadataListAccessor<IOpenApiTagMetadata>('openapi/tags', 'name'),
     TAG_GROUPS: MetadataAccessor<IOpenApiTagGroupMetadata>('openapi/tagGroups'),
-    EXTENSIONS: MetadataMapAccessor<Record<string, IOpenApiExtensionMetadata>>('openapi/extensions'),
   },
   SWAGGER: {
     TAGS: MetadataListAccessor<string>(SWAGGER_DECORATORS.API_TAGS),
@@ -52,6 +51,7 @@ export const DECORATORS = {
     MODEL_PROPERTIES: MetadataAccessor<ApiPropertyOptions & Record<string, any>>(SWAGGER_DECORATORS.API_MODEL_PROPERTIES),
     MODEL_PROPERTIES_MAP: MetadataMapAccessor<ApiPropertyOptions & Record<string, any>>(SWAGGER_DECORATORS.API_MODEL_PROPERTIES),
     MODEL_PROPERTIES_ARRAY: MetadataListAccessor<`:${string}`>(SWAGGER_DECORATORS.API_MODEL_PROPERTIES_ARRAY),
+    EXTENSIONS: MetadataMapAccessor<Record<string, any>>(SWAGGER_DECORATORS.API_EXTENSION),
   }
 };
 
@@ -59,7 +59,7 @@ export const DECORATORS = {
  * An object representing various custom OpenAPI extensions.
  */
 export const EXTENSIONS = {
-  ORIGIN: 'x-oa-origin',
-  ORIGIN_KIND: (kind?: DecoratorKind) => [EXTENSIONS.ORIGIN, 'kind', kind].filter(Boolean).join(':'),
+  ORIGIN: 'x-nestoa-origin',
+  ORIGIN_KIND: (kind?: string) => [EXTENSIONS.ORIGIN, 'kind', kind].filter(Boolean).join(':'),
   ADDITIONAL_OPERATIONS: 'x-oai-additionalOperations',
 };

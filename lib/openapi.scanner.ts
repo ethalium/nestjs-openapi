@@ -26,6 +26,11 @@ export interface IOpenApiScannedController {
   methods: ClassEntryMethod[];
 }
 
+export interface IOpenApiScannedProperties {
+  classType: Type;
+  propertyKey: string;
+}
+
 export class OpenApiScanner {
 
   constructor(

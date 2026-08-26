@@ -132,6 +132,10 @@ An optional array of transformers that implement the `IOpenApiTransformer` inter
 }
 ```
 
+---
+#### `defaultOperationExtensions`, `defaultPropertyExtensions`: Record<IOpenApiExtensionKey, any>
+Adds additional extensions to each operation and property. Can be useful for default extensions like `x-order`.
+
 ## Decorators
 Decorators are used to add additional metadata to the controllers and endpoints. Some decorators are not documented here, because they're mainly used internally.
 

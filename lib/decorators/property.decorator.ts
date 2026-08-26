@@ -3,6 +3,8 @@ import type { IOpenApiPropertyOptions } from '../interfaces/property.interface';
 import { extractObject, extractString } from '../utils/type.utils';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
+import { STORES } from '../openapi.constants';
+import { OAOrigin } from './origin.decorator';
 
 export function OAProperty(options?: IOpenApiPropertyOptions): PropertyDecorator {
   return OACreateProperty({
@@ -44,12 +46,18 @@ export function OACreateProperty(data: {
         };
       }
 
+      // add @OAOrigin decorator
+      store.push(OAOrigin('property'));
+
       // add expose/exclude decorator
       store.push((ctx.data.expose ?? true) ? Expose() : Exclude());
 
-      // add ApiProperty
+      // add ApiProperty decorator
       store.push(ApiProperty(ctx.data));
 
+    },
+    onApply: (ctx) => {
+      !STORES.MODELS.includes(ctx.classType) && STORES.MODELS.push(ctx.classType);
     }
   })(data.args);
 }

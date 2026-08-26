@@ -27,7 +27,7 @@ export function OAController(...args: any[]): ClassDecorator {
       }));
 
       // add @OAOrigin decorator
-      store.push(OAOrigin());
+      store.push(OAOrigin('controller'));
 
       // add @OARequest decorator
       store.push(OARequest('controller', options.data));

@@ -1,12 +1,12 @@
 import { AllDecorator, createDecorator } from '../utils/decorator.utils';
 import { ApiExtension } from '@nestjs/swagger';
 import { IOpenApiOriginMetadata } from '../interfaces/origin.interface';
-import { EXTENSIONS, STORES } from '../openapi.constants';
+import { DECORATORS, EXTENSIONS, STORES } from '../openapi.constants';
 
 let counter = 0;
 
 /** @internal */
-export function OAOrigin(): AllDecorator {
+export function OAOrigin(kind: string): AllDecorator {
   return createDecorator<void, IOpenApiOriginMetadata|null>({
     transform: (opts) => ({
       ...opts,
@@ -14,7 +14,7 @@ export function OAOrigin(): AllDecorator {
     }),
     decorators: (ctx, store) => {
       if(!ctx.data) return;
-      store.push(ApiExtension(EXTENSIONS.ORIGIN_KIND(ctx.kind), ctx.data.id));
+      DECORATORS.SWAGGER.EXTENSIONS.set(EXTENSIONS.ORIGIN_KIND(kind), ctx.data.id, ...ctx.decorateArgs);
     },
     onApply: (ctx) => {
       if(!ctx.data) return;

@@ -2,6 +2,8 @@ import type { OpenAPIObject, SwaggerDocumentOptions, TagObject } from '@nestjs/s
 import type { IOpenApiStatus, IOpenApiTagGroupMetadata, IOpenApiTypeRefSingle } from './common.interface';
 import type { Type } from '@nestjs/common';
 import type { IOpenApiTransformer } from '../transformers/base.transformer';
+import { AnyDecorator } from '../utils/decorator.utils';
+import { IOpenApiExtensionKey } from './extension.interface';
 
 export interface IOpenApiDocumentOptions extends SwaggerDocumentOptions {
 
@@ -82,6 +84,12 @@ export interface IOpenApiDocumentOptions extends SwaggerDocumentOptions {
    * to meet specific customization or processing requirements.
    */
   transformers?: IOpenApiTransformer[];
+
+  /**
+   * Global extensions for all operations and properties.
+   */
+  defaultOperationExtensions?: Record<IOpenApiExtensionKey, any>;
+  defaultPropertyExtensions?: Record<IOpenApiExtensionKey, any>;
 
 }
 

@@ -27,7 +27,6 @@ interface IOpenApiBuilderController<MustHaveTagGroup extends boolean> {
   controller: IOpenApiScannedController;
   tagGroup: MustHaveTagGroup extends true ? IOpenApiTagGroupMetadata : IOpenApiTagGroupMetadata | null;
   tags: IOpenApiTagMetadata[];
-  extensions: Record<string, IOpenApiExtensionMetadata>;
 }
 
 interface IOpenApiBuilderMethod<MustHaveTagGroup extends boolean> {
@@ -35,7 +34,6 @@ interface IOpenApiBuilderMethod<MustHaveTagGroup extends boolean> {
   method: ClassEntryMethod;
   tagGroup: MustHaveTagGroup extends true ? IOpenApiTagGroupMetadata : IOpenApiTagGroupMetadata | null;
   tags: IOpenApiTagMetadata[];
-  extensions: Record<string, IOpenApiExtensionMetadata>;
 }
 
 interface IOpenApiBuilderResponse {
@@ -73,6 +71,8 @@ export class OpenApiBuilder {
         : this.opts.responseOverrideModelNameFactory === true
           ? defaultResponseOverrideModelNameFactory
           : this.opts.responseOverrideModelNameFactory || defaultResponseOverrideModelNameFactory,
+      defaultOperationExtensions: this.opts.defaultOperationExtensions || {},
+      defaultPropertyExtensions: this.opts.defaultPropertyExtensions || {},
     } as Required<IOpenApiDocumentOptions>;
   }
 
@@ -94,7 +94,9 @@ export class OpenApiBuilder {
     // then we can build the response overrides.
     this.buildResponseOverrides();
 
-    // then we need to build the property extensions
+    // then we need to build the extensions
+    this.buildControllerExtensions();
+    this.buildMethodExtensions();
     this.buildPropertyExtensions();
 
     // return the config.
@@ -246,11 +248,61 @@ export class OpenApiBuilder {
 
   }
 
+
+  /**
+   * Builds and applies extensions to controller methods by gathering and merging
+   * default property extensions, controller-level extensions, and method-level extensions.
+   *
+   * Iterates over registered controllers and their associated methods to retrieve
+   * relevant extension metadata. The merged extensions are then applied to the methods
+   * using the provided decorator mechanism.
+   *
+   * @return {void} Does not return a value.
+   */
+  private buildControllerExtensions(): void {
+    for(const controller of this.getControllers()){
+      const controllerExtensions = DECORATORS.SWAGGER.EXTENSIONS.getAll(controller.controller.type);
+      for(const method of this.getMethods().filter(method => method.controller.type === controller.controller.type)){
+        const methodExtensions = DECORATORS.SWAGGER.EXTENSIONS.getAll(method.method.descriptor.value);
+        DECORATORS.SWAGGER.EXTENSIONS.setAll({
+          ...this.options.defaultPropertyExtensions,
+          ...controllerExtensions,
+          ...methodExtensions,
+        }, method.method.descriptor.value);
+      }
+    }
+  }
+
+  /**
+   * Builds and applies method extensions by merging default operation extensions
+   * with the extensions retrieved from method descriptors. The resulting extensions
+   * are then set for each method descriptor.
+   *
+   * @return {void} This method does not return a value.
+   */
+  private buildMethodExtensions(): void {
+    for(const method of this.getMethods()){
+      const methodExtensions = DECORATORS.SWAGGER.EXTENSIONS.getAll(method.method.descriptor.value);
+      DECORATORS.SWAGGER.EXTENSIONS.setAll({
+        ...this.options.defaultOperationExtensions,
+        ...methodExtensions,
+      }, method.method.descriptor.value);
+    }
+  }
+
+  /**
+   * Builds and assigns property extensions for all models within the defined stores.
+   * This method iterates through each model and its associated properties,
+   * retrieves the extensions for each property, and updates the extensions map.
+   *
+   * @return {void} This method does not return a value.
+   */
   private buildPropertyExtensions(): void {
-    for(const properties of STORES.MODEL_PROPERTIES_EXTENSIONS.values()){
-      for(const extensions of Object.values(properties)){
-        for(const [extensionKey, extensionContext] of Object.entries(extensions)){
-          DECORATORS.SWAGGER.MODEL_PROPERTIES_MAP.set(extensionKey, extensionContext.data.properties, ...extensionContext.decorateArgs);
+    for(const model of STORES.MODELS){
+      for(const property of DECORATORS.SWAGGER.MODEL_PROPERTIES_ARRAY.get(model.prototype).map(_ => _.substring(1))){
+        const propertyExtensions = DECORATORS.SWAGGER.EXTENSIONS.getAll(model.prototype, property);
+        for(const [extensionKey, extensionValue] of Object.entries({ ...this.options.defaultPropertyExtensions, ...propertyExtensions })){
+          DECORATORS.SWAGGER.MODEL_PROPERTIES_MAP.set(extensionKey, extensionValue, model.prototype, property);
         }
       }
     }
@@ -271,7 +323,6 @@ export class OpenApiBuilder {
           (DECORATORS.OPENAPI.TAGS.get(controller.type) || []),
           (DECORATORS.SWAGGER.TAGS.get(controller.type) || []).map(_ => ({name: _})),
         ].flat()),
-        extensions: DECORATORS.OPENAPI.EXTENSIONS.getAll(controller.type) || {},
       }))
       .map(controller => {
         controller.tagGroup = controller.tagGroup ?? this.getTagGroupUngrouped();
@@ -306,7 +357,6 @@ export class OpenApiBuilder {
           (DECORATORS.OPENAPI.TAGS.get(method.descriptor.value) || []),
           (DECORATORS.SWAGGER.TAGS.get(method.descriptor.value) || []).map(_ => ({name: _}))
         ].flat()),
-        extensions: DECORATORS.OPENAPI.EXTENSIONS.getAll(method.descriptor.value) || {},
       }))).flat()
       .map(method => {
         method.tagGroup = method.tagGroup ?? this.getTagGroupUngrouped();

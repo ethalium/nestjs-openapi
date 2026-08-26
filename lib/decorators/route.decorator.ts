@@ -27,7 +27,7 @@ export function OARoute(method: RequestMethod, ...args: any[]): MethodDecorator 
       }));
 
       // add @OAOrigin decorator
-      store.push(OAOrigin());
+      store.push(OAOrigin('route'));
 
       // add @OARequest decorator
       store.push(OARequest('route', options.data));

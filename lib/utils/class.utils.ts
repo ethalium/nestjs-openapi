@@ -39,12 +39,6 @@ export function getAllClassEntries(instance: any): ClassEntry[] {
   // create array for entries
   const entries: ClassEntry[] = [];
 
-  // used to mark shadowing
-  const mostDerivedProtoKeys = new Set<string | symbol>([
-    ...Object.getOwnPropertyNames(rootProto),
-    ...Object.getOwnPropertySymbols(rootProto),
-  ]);
-
   // instance own fields (these are "class properties" at runtime)
   for (const propertyKey of [Object.getOwnPropertyNames(instance), Object.getOwnPropertySymbols(instance)].flat(9)) {
     entries.push({

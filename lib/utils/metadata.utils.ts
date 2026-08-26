@@ -178,6 +178,13 @@ export function MetadataMapAccessor<T = any, K extends keyof T = keyof T>(metada
       this.setAll(obj, target, propertyKey);
       return value;
     }
+
+    setDefault(name: K, value: T[K], target: any, propertyKey?: string | symbol): T[K] {
+      const obj: any = this.getAll(target, propertyKey) || {};
+      obj[name] = obj[name] || value;
+      this.setAll(obj, target, propertyKey);
+      return obj[name];
+    }
   };
 }
 

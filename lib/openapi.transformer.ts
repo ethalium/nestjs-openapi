@@ -65,8 +65,8 @@ export class OpenApiTransformer {
       for(const transformer of activeTransformers) {
         const extensionContext: IOpenApiOperationExtensionTransformContext = {
           ...context,
-          propertiesFromController: context.originClass ? DECORATORS.OPENAPI.EXTENSIONS.get(transformer.extension, context.originClass)?.properties : undefined,
-          propertiesFromMethod: context.originPropertyDescriptor ? DECORATORS.OPENAPI.EXTENSIONS.get(transformer.extension, context.originPropertyDescriptor.value)?.properties : undefined,
+          propertiesFromController: context.originClass ? DECORATORS.SWAGGER.EXTENSIONS.get(transformer.extension, context.originClass) : undefined,
+          propertiesFromMethod: context.originPropertyDescriptor ? DECORATORS.SWAGGER.EXTENSIONS.get(transformer.extension, context.originPropertyDescriptor.value) : undefined,
           properties: context.operationObject[transformer.extension],
         };
         const transformed = transformer.transform?.(extensionContext);
@@ -107,7 +107,7 @@ export class OpenApiTransformer {
 
       // find generated operations
       Object.entries(pathObject).forEach(([operation, operationObject]) => {
-        if(operationObject && typeof operationObject === 'object' && !Array.isArray(operationObject) && EXTENSIONS.ORIGIN_KIND('class') in operationObject){
+        if(operationObject && typeof operationObject === 'object' && !Array.isArray(operationObject) && EXTENSIONS.ORIGIN_KIND('controller') in operationObject){
           operations.set(operation, operationObject);
         }
       });
@@ -121,8 +121,8 @@ export class OpenApiTransformer {
 
       // create contexts for operations
       Array.from(operations.entries()).forEach(([operation, operationObject]) => {
-        const originClass = STORES.ORIGINS.get(operationObject[EXTENSIONS.ORIGIN_KIND('class')] ?? -1)?.classType || null;
-        const originPropertyDescriptor = STORES.ORIGINS.get(operationObject[EXTENSIONS.ORIGIN_KIND('method')] ?? -1)?.propertyDescriptor || null;
+        const originClass = STORES.ORIGINS.get(operationObject[EXTENSIONS.ORIGIN_KIND('controller')] ?? -1)?.classType || null;
+        const originPropertyDescriptor = STORES.ORIGINS.get(operationObject[EXTENSIONS.ORIGIN_KIND('route')] ?? -1)?.propertyDescriptor || null;
         contexts.push({
           document: document,
           path: path,

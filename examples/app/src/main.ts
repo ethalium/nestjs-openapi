@@ -30,7 +30,11 @@ async function bootstrap() {
     },
     transformers: [
       RbacTransformer
-    ]
+    ],
+    defaultOperationExtensions: {},
+    defaultPropertyExtensions: {
+      'x-order': 0
+    }
   });
 
   // setup swagger

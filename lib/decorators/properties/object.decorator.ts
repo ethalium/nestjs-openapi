@@ -1,18 +1,15 @@
-import { extractObject, extractString } from '../../utils/type.utils';
 import type { IOpenApiPropertyOptions } from '../../interfaces/property.interface';
 import { OACreateProperty } from '../property.decorator';
 import type { SchemaObject } from '@nestjs/swagger';
 
-export function OAObjectProperty(schema?: SchemaObject) : PropertyDecorator;
-export function OAObjectProperty(description?: string, schema?: SchemaObject) : PropertyDecorator;
+export function OAObjectProperty(schema?: Omit<SchemaObject, 'type'>) : PropertyDecorator;
+export function OAObjectProperty(description?: string, schema?: Omit<SchemaObject, 'type'>) : PropertyDecorator;
 export function OAObjectProperty(...args: any[]): PropertyDecorator {
   return OACreateProperty({
     args: args,
     options: {
       type: 'object',
-      description: extractString(args) || undefined,
-      properties: extractObject(args) || {},
-    }
+    } as any
   });
 }
 
@@ -23,9 +20,7 @@ export function OAObjectPropertyOptional(...args: any[]): PropertyDecorator {
     args: args,
     options: {
       type: 'object',
-      description: extractString(args) || undefined,
-      properties: extractObject(args) || {},
       selfRequired: false,
-    }
+    } as any
   });
 }
