@@ -11,6 +11,7 @@ export * from './decorators/controller.decorator';
 export * from './decorators/error.decorator';
 export * from './decorators/exclude.decorator';
 export * from './decorators/extension.decorator';
+export * from './decorators/extra-models.decorator';
 export * from './decorators/header.decorator';
 export * from './decorators/origin.decorator';
 export * from './decorators/param.decorator';
