@@ -15,7 +15,7 @@ import { getSchemaPath, OmitType } from '@nestjs/swagger';
 import { isClassRef, isPlainObject } from './utils/type.utils';
 import { generateSchemaType } from './utils/schema.utils';
 import { IOpenApiExtensionMetadata } from './interfaces/extension.interface';
-import { DECORATORS } from './openapi.constants';
+import { DECORATORS, STORES } from './openapi.constants';
 
 interface IOpenApiBuilderTagGroup extends Omit<IOpenApiTagGroupMetadata, 'tags'> {
   tags: IOpenApiTagMetadata[];
@@ -93,6 +93,9 @@ export class OpenApiBuilder {
 
     // then we can build the response overrides.
     this.buildResponseOverrides();
+
+    // then we need to build the property extensions
+    this.buildPropertyExtensions();
 
     // return the config.
     return this.config;
@@ -241,6 +244,16 @@ export class OpenApiBuilder {
     // apply new responses
     responses.map(([target, status, options]) => DECORATORS.SWAGGER.RESPONSES.set(status, options, target));
 
+  }
+
+  private buildPropertyExtensions(): void {
+    for(const properties of STORES.MODEL_PROPERTIES_EXTENSIONS.values()){
+      for(const extensions of Object.values(properties)){
+        for(const [extensionKey, extensionContext] of Object.entries(extensions)){
+          DECORATORS.SWAGGER.MODEL_PROPERTIES_MAP.set(extensionKey, extensionContext.data.properties, ...extensionContext.decorateArgs);
+        }
+      }
+    }
   }
 
   /**

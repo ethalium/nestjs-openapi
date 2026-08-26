@@ -5,7 +5,7 @@ import type { ApiPropertyOptions, ApiResponseOptions } from '@nestjs/swagger';
 import { DECORATORS as SWAGGER_DECORATORS } from '@nestjs/swagger';
 import type { Type } from '@nestjs/common';
 import { IOpenApiOriginMetadata } from './interfaces/origin.interface';
-import { DecoratorKind } from './utils/decorator.utils';
+import { DecoratorContext, DecoratorKind } from './utils/decorator.utils';
 
 /**
  * An object that defines supported OpenAPI versions and their respective configurations.
@@ -31,6 +31,7 @@ export const OPENAPI_VERSIONS = {
  */
 export const STORES = {
   ORIGINS: new Map<number, IOpenApiOriginMetadata>(),
+  MODEL_PROPERTIES_EXTENSIONS: new Map<Type, Record<string|symbol, Record<string, DecoratorContext<IOpenApiExtensionMetadata>>>>(),
 }
 
 /**
@@ -48,7 +49,8 @@ export const DECORATORS = {
     TAGS: MetadataListAccessor<string>(SWAGGER_DECORATORS.API_TAGS),
     RESPONSES: MetadataMapAccessor<{ [key: string|number]: ApiResponseOptions }>(SWAGGER_DECORATORS.API_RESPONSE),
     EXTRA_MODELS: MetadataListAccessor<Type>(SWAGGER_DECORATORS.API_EXTRA_MODELS),
-    MODEL_PROPERTIES: MetadataAccessor<ApiPropertyOptions>(SWAGGER_DECORATORS.API_MODEL_PROPERTIES),
+    MODEL_PROPERTIES: MetadataAccessor<ApiPropertyOptions & Record<string, any>>(SWAGGER_DECORATORS.API_MODEL_PROPERTIES),
+    MODEL_PROPERTIES_MAP: MetadataMapAccessor<ApiPropertyOptions & Record<string, any>>(SWAGGER_DECORATORS.API_MODEL_PROPERTIES),
     MODEL_PROPERTIES_ARRAY: MetadataListAccessor<`:${string}`>(SWAGGER_DECORATORS.API_MODEL_PROPERTIES_ARRAY),
   }
 };

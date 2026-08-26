@@ -36,6 +36,12 @@ async function bootstrap() {
   // setup swagger
   SwaggerModule.setup('swagger', app, document);
 
+  // provide openapi.json
+  app.use('/scalar/openapi.json', (_, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(document, null, 2));
+  })
+
   // setup scalar
   app.use('/scalar', apiReference({
     content: document,
