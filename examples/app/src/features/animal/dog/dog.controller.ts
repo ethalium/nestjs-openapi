@@ -1,6 +1,6 @@
 import { OAController, OAInternalServerError, OAQueryMethod } from '../../../../../../lib';
 import { OAGet } from '../../../../../../lib/decorators/routes/get.decorator';
-import { DogDto } from '../dto/dog.dto';
+import { DogDto } from './dog.dto';
 import { RbacRequires } from '../../../main.rbac';
 
 @RbacRequires(['animal.dog'])

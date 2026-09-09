@@ -1,6 +1,6 @@
 import { OAController, OAInternalServerError, OAQueryMethod } from '../../../../../../lib';
 import { OAGet } from '../../../../../../lib/decorators/routes/get.decorator';
-import { CatDto } from '../dto/cat.dto';
+import { CatDto } from './cat.dto';
 import { ErrorResponse } from '../../../main.types';
 import { RbacRequires } from '../../../main.rbac';
 

@@ -130,7 +130,7 @@ export class OpenApiScanner {
           controllers.set(controller.id, {
             id: controller.id,
             name: controller.metatype.name,
-            parents: [module.parents, module].flat(),
+            parents: [module.parents, module].flat().reverse(),
             item: controller,
             type: controller.metatype as any,
             properties: getAllClassEntries(controller.instance).filter(item => item.kind === 'property') as any,

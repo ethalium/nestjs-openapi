@@ -1,4 +1,4 @@
-import { AnimalDto } from './animal.dto';
+import { AnimalDto } from '../animal.dto';
 import { OAArrayProperty, OAEnumProperty, OATypeProperty } from '../../../../../../lib';
 
 export class CatDto extends AnimalDto {
