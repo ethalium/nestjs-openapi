@@ -1,4 +1,3 @@
-import { createDecorator } from '../utils/decorator.utils';
 import {
   ApiBasicAuth,
   ApiBearerAuth,
@@ -10,11 +9,7 @@ import {
 import { applyDecorators } from '@nestjs/common';
 
 export function OASecurity(name: string | SecurityRequirementObject, requirements?: string[]): ClassDecorator & MethodDecorator {
-  return createDecorator<void>({
-    decorators: (ctx, store) => {
-      store.push(ApiSecurity(name, requirements));
-    }
-  })() as any;
+  return applyDecorators(ApiSecurity(name, requirements));
 }
 
 export function OABasicAuth(name?: string): ClassDecorator & MethodDecorator {

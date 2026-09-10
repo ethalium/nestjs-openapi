@@ -1,11 +1,11 @@
 import { createDecorator } from '../utils/decorator.utils';
-import { ApiOperationOptions } from '@nestjs/swagger';
+import { ApiOperation, ApiOperationOptions } from '@nestjs/swagger';
 import { IOpenApiDecoratorOptions } from '../interfaces/common.interface';
 import { DECORATORS } from '../openapi.constants';
 
 export function OAOperation(options: ApiOperationOptions, decoratorOptions?: IOpenApiDecoratorOptions): MethodDecorator {
   return createDecorator<ApiOperationOptions, ApiOperationOptions>({
-    onApply: (options) => {
+    decorators: (options, store) => {
 
       // get current operation
       let operation = DECORATORS.SWAGGER.OPERATION.get(...options.decorateArgs);
@@ -25,8 +25,8 @@ export function OAOperation(options: ApiOperationOptions, decoratorOptions?: IOp
         }
       }
 
-      // set operation
-      DECORATORS.SWAGGER.OPERATION.set(operation || {}, ...options.decorateArgs);
+      // add @ApiOperation
+      store.push(ApiOperation(operation || {}));
 
     },
   })(options) as any;
