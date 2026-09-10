@@ -1,10 +1,10 @@
 import type { IOpenApiBodyOptions } from './body.interface';
 import type { RequestMappingMetadata } from '@nestjs/common/decorators/http/request-mapping.decorator';
 import type { IOpenApiRequestOptions } from './request.interface';
-import type { IOpenApiResponseOptions, IOpenApiResponseType } from './common.interface';
-import type { ExternalDocumentationObject } from '@nestjs/swagger';
+import type { IOpenApiDecoratorOptions, IOpenApiResponseOptions, IOpenApiResponseType } from './common.interface';
+import type { ExternalDocumentationObject, SecurityRequirementObject, ServerObject } from '@nestjs/swagger';
 
-export interface IOpenApiRouteOptions extends IOpenApiRequestOptions, Omit<RequestMappingMetadata, 'method'> {
+export interface IOpenApiRouteOptions extends IOpenApiRequestOptions, Omit<RequestMappingMetadata, 'method'>, IOpenApiDecoratorOptions {
 
   /**
    * OpenAPI exclude
@@ -20,6 +20,9 @@ export interface IOpenApiRouteOptions extends IOpenApiRequestOptions, Omit<Reque
   description?: string;
   operationId?: string;
   externalDocs?: ExternalDocumentationObject;
+  deprecated?: boolean;
+  security?: SecurityRequirementObject[];
+  servers?: ServerObject[];
 
   /**
    * OpenAPI Response

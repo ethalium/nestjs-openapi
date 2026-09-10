@@ -5,7 +5,6 @@ import { IOpenApiOperationExtensionTransformContext } from './transformers/opera
 import { DECORATORS, EXTENSIONS, STORES } from './openapi.constants';
 import { MoveUnsupportedOperationsToExtension } from './transformers/builtin/move-unsupported-operations-to-extension';
 import { EnsureDescriptionIsNotEmpty } from './transformers/builtin/ensure-description-is-not-empty';
-import { isOpenApiOperationBuiltIn } from './utils/version.utils';
 
 export class OpenApiTransformer {
   private readonly customTransformers!: IOpenApiTransformerType[];

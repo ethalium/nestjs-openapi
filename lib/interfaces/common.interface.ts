@@ -4,6 +4,7 @@ import type {
   ApiResponseExamples,
   ApiResponseNoStatusOptions,
   ApiResponseOptions,
+  ApiTagOptions,
 } from '@nestjs/swagger';
 
 /**
@@ -122,7 +123,7 @@ export type IOpenApiTags = Array<string|IOpenApiTagMetadata>;
  *            However, you can add content to its description field, which is rendered in the middle panel.
  *            This is useful for handling common information like pagination and rate limits, as you can provide a detailed description for the tag using external Markdown files.
  */
-export interface IOpenApiTagMetadata {
+export interface IOpenApiTagMetadata extends ApiTagOptions {
   name: string;
   displayName?: string;
   description?: string
@@ -158,3 +159,21 @@ export interface IOpenApiTagGroupMetadata {
  * in the OpenAPI context.
  */
 export type IOpenApiAllowedEnumTypes = NonNullable<ApiPropertyOptions['enum']>;
+
+/**
+ * Represents the configuration options for an OpenAPI decorator.
+ */
+export interface IOpenApiDecoratorOptions {
+
+  /**
+   * Defines the strategy to use for overriding values.
+   *
+   * - If `false`, no override will occur.
+   * - If `'replace'`, existing values will be completely replaced.
+   * - If `'merge'`, existing values will be merged with the new ones.
+   *
+   * @default "merge"
+   */
+  overrideStrategy?: false | 'replace' | 'merge';
+
+}

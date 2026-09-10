@@ -2,7 +2,6 @@ import type { OpenAPIObject, SwaggerDocumentOptions, TagObject } from '@nestjs/s
 import type { IOpenApiStatus, IOpenApiTagGroupMetadata, IOpenApiTypeRefSingle } from './common.interface';
 import type { Type } from '@nestjs/common';
 import type { IOpenApiTransformer } from '../transformers/base.transformer';
-import { AnyDecorator } from '../utils/decorator.utils';
 import { IOpenApiExtensionKey } from './extension.interface';
 
 export interface IOpenApiDocumentOptions extends SwaggerDocumentOptions {

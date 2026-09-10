@@ -14,7 +14,6 @@ import type { ApiResponseOptions } from '@nestjs/swagger';
 import { getSchemaPath, OmitType } from '@nestjs/swagger';
 import { isClassRef, isPlainObject } from './utils/type.utils';
 import { generateSchemaType } from './utils/schema.utils';
-import { IOpenApiExtensionMetadata } from './interfaces/extension.interface';
 import { DECORATORS, STORES } from './openapi.constants';
 
 interface IOpenApiBuilderTagGroup extends Omit<IOpenApiTagGroupMetadata, 'tags'> {

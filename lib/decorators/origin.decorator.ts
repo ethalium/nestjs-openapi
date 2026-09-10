@@ -1,5 +1,4 @@
 import { AllDecorator, createDecorator } from '../utils/decorator.utils';
-import { ApiExtension } from '@nestjs/swagger';
 import { IOpenApiOriginMetadata } from '../interfaces/origin.interface';
 import { DECORATORS, EXTENSIONS, STORES } from '../openapi.constants';
 
